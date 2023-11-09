@@ -6,7 +6,8 @@ from tqdm import tqdm
 import logging
 
 
-def get_data(folder=os.path.join(os.getcwd(),'downloaded_data'), link='https://github.com/JGCRI/pytemplate/raw/dev/examples.zip'):
+def get_data(folder=os.path.join(os.getcwd()),
+             link='https://zenodo.org/records/10093575/files/example.zip?download=1'):
     """Download and unpack example data supplement from Zenodo current installed distribution.
     :param folder:              Full path to the folder to save data to
     :type folder:               str
@@ -54,10 +55,10 @@ def get_data(folder=os.path.join(os.getcwd(),'downloaded_data'), link='https://g
     logging.info(f'File downloaded to {save_path}.')
 
     if zipfile.is_zipfile(save_path):
-        with zipfile.ZipFile(save_path,'r') as zipped:
+        with zipfile.ZipFile(save_path, 'r') as zipped:
             logging.info(f'Unzipping: {zipped} to folder: {os.path.abspath(folder)}...')
             zipped.extractall(path=folder)
-            logging.info(f'Unzipping: {zipped} to folder: {os.path.abspath(folder)} complete.')
+            logging.info(f'Unzipping complete.')
 
     logging.info('Function get_data complete.')
 
