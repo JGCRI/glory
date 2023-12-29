@@ -1,6 +1,8 @@
 License
 =======
 
+GLORY
+
 Copyright (c) 2021: Battelle Memorial Institute
 
 Open source under license BSD 2-Clause

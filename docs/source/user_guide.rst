@@ -1,27 +1,28 @@
 User Guide
 ===============
-This page walks you through the steps of installing **pytemplate** and running an example.
 
-Motivation
-----------
+In progress ...
 
-In progress...
-
-Installation
-------------
-
-In progress...
-
-Example Data
-------------
-
-In progress...
-
-Run
------------------------------------
-
-In progress... ::
-
-   code chunk
+Workflow Overview
+-----------------
+In progress ...
 
 
+Global River Basins
+-------------------
+In progress ...
+
+
+Linear Programming Model
+------------------------
+In progress ...
+
+
+Capacity and Water Yield
+------------------------
+In progress ...
+
+
+Water Supply Curve
+-------------------
+In progress ...
