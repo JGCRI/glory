@@ -22,13 +22,13 @@ setup(
     description='A python package for the Global Reservoir Yield (GLORY) model.',
     long_description=readme(),
     long_description_content_type="text/markdown",
-    python_requires='>=3.5, <4',
+    python_requires='>=3.9',
     include_package_data=True,
     install_requires=[
         "pytest",
         "tqdm",
         "requests",
-        "pandas>1.5",
+        "pandas>=1.5",
         "numpy>=1.23",
         "PyYAML>=6",
     ],
@@ -38,10 +38,10 @@ setup(
             "autodoc>=0.5.0",
             "twine>=4.0.1",
             "ipykernel>=6.15.1",
-            "sphinx>=4.0.2",
-            'sphinx-panels>=0.6.0',
-            'sphinx-rtd-theme>=0.5.2',
-            'sphinx-mathjax-offline>=0.0.1'
+            "sphinx~=7.2.6",
+            'sphinx-panels~=0.6.0',
+            'sphinx-rtd-theme~=0.5.2',
+            'sphinx-mathjax-offline~=0.0.2'
         ]
     }
 )

@@ -1,14 +1,24 @@
-import logging
-import os
-import pandas as pd
-import numpy as np
+"""
+Supply curves.
 
+@author: Mengqi Zhao (mengqi.zhao@pnnl.gov)
+
+@Project: GLORY v1.0
+
+License:  BSD 2-Clause, see LICENSE and DISCLAIMER files
+
+Copyright (c) 2023, Battelle Memorial Institute
+
+"""
+
+import numpy as np
+import logging
 import math
 from scipy.interpolate import interp1d
 from scipy.interpolate import PchipInterpolator
 
 from glory.data.read_data import DataLoader
-from glory.method.lp import LP_model
+from glory.method.lp import *
 
 
 class SupplyCurve:
@@ -22,19 +32,25 @@ class SupplyCurve:
 
     """
 
-    def __init__(self, config, period, demand_gcam, capacity_gcam):
-        self.basin_id = config.scales['basin_id']
+    def __init__(self, config, basin_id, period, demand_gcam, capacity_gcam):
+
+        logging.info(f'Starting function supply_curve for basin {basin_id} in period {period}.')
+
+        self.config = config
+        self.basin_id = basin_id
         self.period = period
         self.demand_gcam = demand_gcam
         self.capacity_gcam = capacity_gcam
 
-        self.d = DataLoader(config=config,
+        self.d = DataLoader(config=self.config,
+                            basin_id=basin_id,
                             period=self.period,
-                            base_period=config.scales['base_period'],
+                            base_period=self.config.scales['base_period'],
                             demand_gcam=self.demand_gcam,
                             capacity_gcam=self.capacity_gcam)
 
         # initialized base yield when capacity is 0
+        self.lp_solution = None  # LP model solution summary
         self.yield_base = self.run_lp_model(capacity=0, capacity_track=0)
 
         # initialize output list
@@ -42,7 +58,7 @@ class SupplyCurve:
         self.output.append([0, self.yield_base])
 
         # initialize
-        self.init_intv = 100  # initial number of intervals for reservoir storage capacity expansion
+        self.init_intv = self.config.parameters['init_segments']  # initial number of intervals for reservoir storage capacity expansion
         self.discount_rate = 0.05  # discount rate for reservoir capital cost
         self.life_time = 60  # lifetime in years
         self.base_price = 1e-04  # starting price for water, $/m3
@@ -57,7 +73,7 @@ class SupplyCurve:
         self.max_expansion_point = None  # the capacity and yield values for the max expansion point
         self.expansion_unit = None  # storage capacity increments
         self.max_supply = None  # maximum supply
-        self.cost_per_m3 = None # reservoir capital cost in 1975USD/m3
+        self.cost_per_m3 = None  # reservoir capital cost in 1975USD/m3
 
         # discrete capacity-yield curve unconstrained by maximum capacity
         self.capacity_yield_unconstrained = self.get_capacity_yield_unconstrained()
@@ -89,13 +105,14 @@ class SupplyCurve:
         # maxsubresource
         self.maxsubresource = self.construct_maxsubresource()
 
+        logging.info('Function supply_curve completed successfully.')
 
     def get_reservoir_evap(self, capacity_track):
         """
         calculate reservoir surface area based on current storage capacity.
         Calculate reservoir ET in km3/year based on the new storage capacity in each basin.
 
-        :param capacity_track:
+        :param capacity_track:          list for reservoir capacity expansion track
 
         :return:
         """
@@ -142,15 +159,28 @@ class SupplyCurve:
         Run LP model.
 
         :param capacity:                float for target capacity
-        :param capacity_track:          dataframe for tracking capacity at each iteration
+        :param capacity_track:          list for tracking capacity at each iteration
 
         :return:                        value for optimized yield
         """
 
         evap_vol = self.get_reservoir_evap(capacity_track=capacity_track)
 
-        val = LP_model(K=capacity, Smin=self.d.storage_min, Ig=self.d.inflow, Eg=evap_vol,
-                       f=self.d.demand_profile, p=self.d.inflow_profile, z=self.d.evap_profile, m=self.d.m)
+        model = lp_model(K=capacity, Smin=self.d.storage_min, Ig=self.d.inflow, Eg=evap_vol,
+                         f=self.d.demand_profile, p=self.d.inflow_profile, z=self.d.evap_profile, m=self.d.m,
+                         solver=self.config.lp['solver'])
+
+        # optimal value
+        val = model.obj()
+
+        # solution outputs
+        solution = lp_solution(model=model, K=capacity, basin_id=self.basin_id, period=self.period)
+
+        # concat solutions from different K values
+        if self.lp_solution is None:
+            self.lp_solution = solution
+        else:
+            self.lp_solution = pd.concat([self.lp_solution, solution])
 
         return val
 
@@ -161,12 +191,15 @@ class SupplyCurve:
         However, another thing to notice is that the inflection point when reaches mean annual inflow.
         This requires we make sure there are enough iteration before the inflection point (20 or more).
         The algorithm is used to detect if the yield value with K = dx is less than 0.05 of Ig or
-        Y0+0.05(Ig-Y0) if Y0 != 0, dx is reduce to 1/2 until dx satisfies the condition.
+        Y0+0.05(Ig-Y0) if Y0 != 0, dx is reduced to 1/2 until dx satisfies the condition.
 
         :return:                none
         """
 
+        # rough estimate of dx using max capacity potential and initial number of intervals
         dx_coarse = self.d.max_capacity / self.init_intv
+
+        # calculate the iterations based on max capacity potential and the expansion increment
         iteration = int(math.ceil(self.d.max_capacity / self.d.expan_incr))
 
         if (iteration > 500) or (iteration < 50):
@@ -174,7 +207,7 @@ class SupplyCurve:
         else:
             self.dx = self.d.expan_incr
 
-        # initialize init yield from first incremental capacity expansion
+        # initialize initial yield from first incremental capacity expansion
         yield_dx = self.run_lp_model(capacity=self.dx, capacity_track=self.dx)
 
         # deduce dx so that it is small enough where the increase in yield value is less than 5% of the difference

@@ -2,72 +2,131 @@
 import pytest
 import glory
 import os
+import warnings
 
-def test_get_data():
-    """
-    test clean_up function
-    :return:
-    """
-    assert os.path.abspath(glory.get_data()) == os.path.abspath(os.path.join(os.getcwd(), 'example'))
+# download example data
+glory.get_example_data()
+downloaded_data_path = glory.default_download_dir
+dir_output = os.path.join(downloaded_data_path, 'outputs')
+
+# config file
+config_file = os.path.join(downloaded_data_path, 'example_config.yml')
+
+# read config
+config = glory.ConfigReader(config_file)
+
+# read data
+data = glory.DataLoader(config=config,
+                        basin_id=83,
+                        period=2025,
+                        base_period=2020,
+                        demand_gcam=None,
+                        capacity_gcam=None)
+
+# supply curve
+sc = glory.SupplyCurve(config=config,
+                       basin_id=83,
+                       period=2025,
+                       demand_gcam=None,
+                       capacity_gcam=None)
+
+# lp model
+lp = glory.lp_model(K=1,
+                    Smin=sc.d.storage_min,
+                    Ig=sc.d.inflow,
+                    Eg=3,
+                    f=sc.d.demand_profile,
+                    p=sc.d.inflow_profile,
+                    z=sc.d.evap_profile,
+                    m=sc.d.m,
+                    solver='glpk')
+
+# run model
+glory.run_model(config_file=config_file)
+
+# --------------------------------------------
+# Test Modules
+# --------------------------------------------
+
 
 def test_read_config():
     """
     test read_config
-    :return:
     """
-    downloaded_data_path = glory.get_data()
-    example_config = os.path.join(downloaded_data_path, 'example_config.yml')
-    assert glory.ConfigReader(example_config) == {'path_example_data_set': 'example_data.csv'}
+
+    basin_to_country = os.path.abspath(config.reference_files['basin_to_country_mapping'])
+
+    assert basin_to_country == os.path.abspath(os.path.join(downloaded_data_path,  'inputs', 'basin_to_country_mapping.csv'))
+
 
 def test_read_data():
     """
-    test method
-    :return:
+    test read_data function
     """
-    downloaded_data_path = glory.get_data()
-    example_config = os.path.join(downloaded_data_path, 'example_config.yml')
-    config = glory.ConfigReader(example_config)
-    example_key = list(config.keys())[0]
-    example_value = os.path.join(downloaded_data_path,list(config.values())[0])
-    updated_config = config
-    updated_config[example_key] = example_value
-    df = (glory.DataLoader(updated_config)).example_data_set
-    assert list(df.name)==['a','b','c']
-    assert list(df.value) == [1,2,3]
 
-def test_method():
+    assert data.basin_name_std.shape == (235, 4)
+
+
+def test_lp_model():
     """
-    test method
-    :return:
+    test lp_model function
     """
-    assert glory.SupplyCurve(2,2) == 4
+
+    assert lp.obj() >= 0
+
+
+def test_lp_solution():
+    """
+    test lp solution
+    """
+
+    assert list(sc.lp_solution.columns.values) == ['basin_id', 'period', 'month', 'storage_capacity', 'inflow', 'evaporation',
+                                                   'release', 'environmental_flow', 'return_flow', 'spill', 'storage']
+
+
+def test_supply_curve():
+    """
+    test supply curve output
+    """
+
+    assert len(sc.supply_curve) == 20
+
 
 def test_write_outputs():
     """
-    test diagnostics function
-    :return:
+    test write_outputs function
     """
-    assert glory.write_outputs(2,2) == 4
+
+    dir_capacity_yield = os.path.abspath(os.path.join(dir_output, 'capacity_yield', 'capacity_yield_2030.csv'))
+    dir_supply_curve = os.path.abspath(os.path.join(dir_output, 'supply_curve', 'supply_curve_2030.csv'))
+    dir_lp_solution = os.path.abspath(os.path.join(dir_output, 'lp_solution', 'lp_solution_2030.csv'))
+
+    assert os.path.exists(dir_capacity_yield)
+    assert os.path.exists(dir_supply_curve)
+    assert os.path.exists(dir_lp_solution)
+
 
 def test_diagnostics():
     """
     test diagnostics function
-    :return:
     """
-    assert glory.diagnostics(2,2) == 4
 
-def test_clean_up():
-    """
-    test clean_up function
-    :return:
-    """
-    assert glory.clean_up(2,2) == 4
+    dir_diag_plot = os.path.abspath(os.path.join(dir_output, 'diagnostics', '2030', '83 - Guadalquivir.png'))
 
-def test_class():
+    assert os.path.exists(dir_diag_plot)
+
+
+# --------------------------------------------
+# Test Warnings
+# --------------------------------------------
+
+def test_warning():
     """
-    test class
-    :return:
+    test warning messages in the functions
     """
-    # assert glory.SupplyCurve().var == 5
-    # assert glory.Pytemplate().config == ''
-    # assert glory.Pytemplate().method == 1
+
+    with pytest.raises(FileNotFoundError):
+        glory.ConfigReader(os.path.join(downloaded_data_path, 'example_config_test.yml'))
+
+    with pytest.raises(TypeError):
+        glory.ConfigReader(os.path.join(downloaded_data_path, 'inputs', 'basin_to_country_mapping.csv'))
