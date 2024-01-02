@@ -33,7 +33,7 @@ setup(
         "PyYAML>=6",
         "scipy~=1.11.2",
         "pyomo~=6.6.2",
-        "glpk~=5.0"
+        "glpk"
     ],
     extras_require={
         'dev': [
