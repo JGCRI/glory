@@ -31,6 +31,7 @@ setup(
         "pandas>=1.5",
         "numpy>=1.23",
         "PyYAML>=6",
+        "scipy~=1.11.2"
     ],
     extras_require={
         'dev': [
