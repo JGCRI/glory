@@ -31,7 +31,9 @@ setup(
         "pandas>=1.5",
         "numpy>=1.23",
         "PyYAML>=6",
-        "scipy~=1.11.2"
+        "scipy~=1.11.2",
+        "pyomo~=6.6.2",
+        "glpk~=5.0"
     ],
     extras_require={
         'dev': [
@@ -40,9 +42,9 @@ setup(
             "twine>=4.0.1",
             "ipykernel>=6.15.1",
             "sphinx~=7.2.6",
-            'sphinx-panels~=0.6.0',
-            'sphinx-rtd-theme~=0.5.2',
-            'sphinx-mathjax-offline~=0.0.2'
+            "sphinx-design",
+            "sphinx-rtd-theme~=0.5.2",
+            "sphinx-mathjax-offline~=0.0.2"
         ]
     }
 )
