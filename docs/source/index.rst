@@ -14,77 +14,111 @@ The key functions of ``GLORY`` are as follows:
 The ``GLORY`` model streamlines workflows by integrating information on climate, hydrology, water demand, reservoir exploitable potential, and physiography to estimate the water availability and prices of water supply from reservoirs. ``GLORY`` identify the sub-annual regulation capability and associated investment of reservoirs and establish boundary conditions for basin-level analysis on reservoir management.
 
 
-.. panels::
-    :card: + intro-card text-center
-    :column: col-lg-6 col-md-6 col-sm-6 col-xs-12 d-flex
+.. grid:: 1 2 2 2
+    :gutter: 2
+    :class-container: class-container
+
+    .. grid-item-card:: Getting Started
+        :columns: 12 6 6 6
+        :class-card: sd-text-center sd-fs-5 sd-rounded-3
+        :class-header: sd-py-5
+        :class-title: sd-py-2
+        :class-body: sd-py-2
+        :link: getting_started
+        :link-type: doc
+
+        :material-regular:`double_arrow;6em`
+        ^^^
+
+        New to ``GLORY``? Get familiar with how to install and run ``GLORY``.
+
+        .. button-ref:: getting_started
+            :ref-type: doc
+            :shadow:
+            :color: secondary
+            :click-parent:
+            :expand:
+            :align: center
+
+            New to GLORY
 
 
-    ---
-    :img-top: _static/index_getting_started.svg
+    .. grid-item-card:: User Guide
+        :columns: 12 6 6 6
+        :class-card: sd-text-center sd-fs-5 sd-rounded-3
+        :class-header: sd-py-5
+        :class-title: sd-py-2
+        :class-body: sd-py-2
+        :link: user_guide
+        :link-type: doc
 
-    Getting Started
-    ^^^^^^^^^^^^^^^
+        :material-regular:`menu_book;6em`
+        ^^^
 
-    New to ``GLORY``?  Get familiar with how to install and run ``GLORY``.
+        The user guide provides in-depth information on the key concepts of ``GLORY``.
 
-    +++
+        .. button-ref:: user_guide
+            :ref-type: doc
+            :shadow:
+            :color: secondary
+            :click-parent:
+            :expand:
+            :align: center
 
-    .. link-button:: getting_started
-            :type: ref
-            :text: New to GLORY
-            :classes: btn-block btn-secondary stretched-link
+            GLORY Details
 
-    ---
-    :img-top: _static/index_user_guide.svg
 
-    User Guide
-    ^^^^^^^^^^
+    .. grid-item-card:: Modules
+        :columns: 12 6 6 6
+        :class-card: sd-text-center sd-fs-5 sd-rounded-3
+        :class-header: sd-py-5
+        :class-title: sd-py-2
+        :class-body: sd-py-2
+        :link: modules
+        :link-type: doc
 
-    The user guide provides in-depth information on the
-    key concepts of ``GLORY``.
+        :material-regular:`blur_on;6em`
+        ^^^
 
-    +++
+        The reference describes the functions and parameters of the ``GLORY`` modules.
 
-    .. link-button:: user_guide
-            :type: ref
-            :text: GLORY Details
-            :classes: btn-block btn-secondary stretched-link
+        .. button-ref:: modules
+            :ref-type: doc
+            :shadow:
+            :color: secondary
+            :click-parent:
+            :expand:
+            :align: center
 
-    ---
-    :img-top: _static/index_modules.svg
+            Module References
 
-    Modules
-    ^^^^^^^^^^^^^
 
-    The reference guide contains a detailed description of
-    the ``GLORY`` modules. The reference describes how the methods
-    work and which parameters can be used.
+    .. grid-item-card:: Contributing to GLORY
+        :columns: 12 6 6 6
+        :class-card: sd-text-center sd-fs-5 sd-rounded-3
+        :class-header: sd-py-5
+        :class-title: sd-py-2
+        :class-body: sd-py-2
+        :link: contributing
+        :link-type: doc
 
-    +++
+        :material-regular:`tips_and_updates;6em`
+        ^^^
 
-    .. link-button:: modules
-            :type: ref
-            :text: Modules Reference
-            :classes: btn-block btn-secondary stretched-link
+        The contributing pages guides you through the process of improving ``GLORY``.
 
-    ---
-    :img-top: _static/index_contribute.svg
+        .. button-ref:: contributing
+            :ref-type: doc
+            :shadow:
+            :color: secondary
+            :click-parent:
+            :expand:
+            :align: center
 
-    Contributing to GLORY
-    ^^^^^^^^^^^^^^^^^^^^
+            I Want To Contribute
 
-    Saw a typo in the documentation? Want to improve
-    existing functionalities? The contributing guidelines will guide
-    you through the process of improving ``GLORY``.
 
-    +++
-
-    .. link-button:: contributing
-            :type: ref
-            :text: I Want To Contribute
-            :classes: btn-block btn-secondary stretched-link
-
-**Date**: |today| **Version**: |version|
+**Date**: |today|    |    **Version**: |version|
 
 **Useful links**:
 `Github Repository <https://github.com/JGCRI/glory>`_ |

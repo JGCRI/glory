@@ -42,7 +42,7 @@ setup(
             "twine>=4.0.1",
             "ipykernel>=6.15.1",
             "sphinx~=7.2.6",
-            "sphinx-design",
+            "sphinx-design~=0.5.0",
             "sphinx-rtd-theme~=0.5.2",
             "sphinx-mathjax-offline~=0.0.2"
         ]
