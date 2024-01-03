@@ -2,7 +2,6 @@
 import pytest
 import glory
 import os
-import warnings
 
 # download example data
 glory.get_example_data()

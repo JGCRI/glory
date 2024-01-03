@@ -32,12 +32,13 @@ setup(
         "numpy>=1.23",
         "PyYAML>=6",
         "scipy~=1.11.2",
-        "pyomo~=6.6.2",
-        "glpk"
+        "pyomo~=6.6.2"
     ],
     extras_require={
-        'dev': [
-            "pytest",
+        'test': [
+            "pytest"
+        ],
+        'docs': [
             "autodoc>=0.5.0",
             "twine>=4.0.1",
             "ipykernel>=6.15.1",
