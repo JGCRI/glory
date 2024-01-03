@@ -32,7 +32,8 @@ setup(
         "numpy>=1.23",
         "PyYAML>=6",
         "scipy~=1.11.2",
-        "pyomo~=6.6.2"
+        "pyomo~=6.6.2",
+        "matplotlib~=3.7.2"
     ],
     extras_require={
         'test': [
