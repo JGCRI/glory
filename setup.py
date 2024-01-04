@@ -26,7 +26,6 @@ setup(
     include_package_data=True,
     install_requires=[
         "pytest",
-        "tqdm",
         "requests",
         "pandas>=1.5",
         "numpy>=1.23",
@@ -41,7 +40,7 @@ setup(
             "autodoc>=0.5.0",
             "twine>=4.0.1",
             "ipykernel>=6.15.1",
-            "nbsphinx~=0.8.6"
+            "nbsphinx~=0.8.6",
             "sphinx~=7.2.6",
             "sphinx-design~=0.5.0",
             "sphinx-rtd-theme~=0.5.2",
