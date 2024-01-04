@@ -38,7 +38,6 @@ replace_line(
 )
 
 
-
 # read config
 config = glory.ConfigReader(config_file)
 
