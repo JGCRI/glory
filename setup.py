@@ -36,13 +36,12 @@ setup(
         "matplotlib~=3.7.2"
     ],
     extras_require={
-        'test': [
-            "pytest"
-        ],
-        'docs': [
+        'dev': [
+            "pytest",
             "autodoc>=0.5.0",
             "twine>=4.0.1",
             "ipykernel>=6.15.1",
+            "nbsphinx~=0.8.6"
             "sphinx~=7.2.6",
             "sphinx-design~=0.5.0",
             "sphinx-rtd-theme~=0.5.2",
