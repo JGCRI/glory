@@ -6,21 +6,44 @@ This page walks you through the steps of installing ``GLORY`` and running an exa
 Installation
 ------------
 
-As a prerequisite, you'll need to have Python installed (version 3.9 or above).
+Pre-requirements
+^^^^^^^^^^^^^^^^
 
-``GLORY`` can be installed from GitHub using ``pip`` in a command prompt or terminal:
+- Before proceeding, ensure that Python is installed (version 3.9 or above). We recommend using Anaconda to set up a virtual environment.
+
+- Additionally, you will need to install the linear programming solver ``glpk``. The recommended method is to use ``conda`` to avoid unexpected issues (refer to the `Pyomo documentation <https://jckantor.github.io/ND-Pyomo-Cookbook/notebooks/01.01-Installing-Pyomo.html#glpk>`_). Make sure to use the same Python environment for all packages.
+
+.. code-block:: bash
+
+    conda install -c conda-forge glpk
+
+
+Install ``GLORY``
+^^^^^^^^^^^^^^^^^
+
+**Option 1:**
+
+You can install ``GLORY`` from GitHub using ``pip`` in a command prompt or terminal:
 
 .. code-block:: bash
 
     pip install git+https://github.com/JGCRI/glory
 
-This will automatically install the dependencies. In order to avoid package version conflicts, consider using a virtual environment.
+This command will automatically install the dependencies. To avoid package version conflicts, consider using a virtual environment.
 
-User can also clone the ``GLORY`` package from GitHub. Navigate to a desired directory:
+**Option 2:**
+
+Alternatively, users can clone the ``GLORY`` package from GitHub. Navigate to the desired directory:
 
 .. code-block:: bash
 
     git clone https://github.com/JGCRI/glory
+
+Then, navigate into the cloned `glory` folder and install ``GLORY`` from a command prompt or terminal :
+
+.. code-block:: bash
+
+    pip install
 
 Try importing ``GLORY`` to confirm that installation was successful:
 

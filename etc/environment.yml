@@ -1,0 +1,11 @@
+name: anaconda-client-env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - anaconda-client
+  - glpk
+  - pip
+  - pip:
+      - -r requirements.txt
+  - pytest-cov
