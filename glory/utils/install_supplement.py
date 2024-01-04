@@ -16,7 +16,6 @@ import zipfile
 import requests
 import importlib.resources
 import importlib.metadata
-import logging
 from io import BytesIO as BytesIO
 
 default_download_dir = os.path.join(os.path.dirname(str(importlib.resources.files('glory'))), 'example')

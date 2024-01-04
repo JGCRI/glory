@@ -43,7 +43,7 @@ setup(
             "nbsphinx~=0.8.6",
             "sphinx~=7.2.6",
             "sphinx-design~=0.5.0",
-            "sphinx-rtd-theme~=0.5.2",
+            "sphinx-rtd-theme~=2.0.0",
             "sphinx-mathjax-offline~=0.0.2"
         ]
     }

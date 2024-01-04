@@ -5,11 +5,39 @@ import os
 
 # download example data
 glory.get_example_data()
-downloaded_data_path = glory.default_download_dir
+downloaded_data_path = os.path.abspath(glory.default_download_dir)
 dir_output = os.path.join(downloaded_data_path, 'outputs')
 
 # config file
 config_file = os.path.join(downloaded_data_path, 'example_config.yml')
+
+
+# modify the config file root directory
+def replace_line(filename, line_number, text):
+    """
+    replace lines in a file.
+
+    :filename:       string for path to the file
+    :line_number:    integer for the line number to replace
+    :text:           string for replacement text
+    """
+
+    with open(filename) as file:
+        lines = file.readlines()
+    lines[line_number - 1] = text
+
+    with open(filename, 'w') as file:
+        for line in lines:
+            file.write(line)
+
+
+replace_line(
+    filename=config_file,
+    line_number=2,
+    text=f'root: {downloaded_data_path}\n'
+)
+
+
 
 # read config
 config = glory.ConfigReader(config_file)

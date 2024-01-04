@@ -15,6 +15,9 @@ import os
 import yaml
 import logging
 
+import glory
+
+
 class ConfigReader:
     """
     Read config file
@@ -37,7 +40,14 @@ class ConfigReader:
             if config_file is not None:
                 self.root = os.path.dirname(config_file)
             else:
-                self.root = os.getcwd()
+                self.root = glory.default_download_dir
+        else:
+            if not os.path.exists(self.root):
+                logging.warning(f'The root directory provided: {self.root} is not a valid directory. '
+                                f'Modify the root directory to the default download directory: {glory.default_download_dir}.')
+                self.root = glory.default_download_dir
+
+
 
         # input files
         if self.input_files is not None:
