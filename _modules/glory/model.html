@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>glory.model &mdash; GLORY 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            GLORY
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Modules Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing to GLORY</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../acknowledgement.html">Acknowledgement</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">GLORY</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">glory.model</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for glory.model</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Model interface for GLORY.</span>
+
+<span class="sd">@author: Mengqi Zhao (mengqi.zhao@pnnl.gov)</span>
+
+<span class="sd">@Project: GLORY v1.0</span>
+
+<span class="sd">License:  BSD 2-Clause, see LICENSE and DISCLAIMER files</span>
+
+<span class="sd">Copyright (c) 2023, Battelle Memorial Institute</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">repeat</span>
+
+<span class="kn">from</span> <span class="nn">glory.data.read_config</span> <span class="kn">import</span> <span class="n">ConfigReader</span>
+<span class="kn">from</span> <span class="nn">glory.data.read_data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">glory.data.write_outputs</span> <span class="kn">import</span> <span class="n">write_outputs</span>
+<span class="kn">from</span> <span class="nn">glory.method.supply_curve</span> <span class="kn">import</span> <span class="n">SupplyCurve</span>
+<span class="kn">from</span> <span class="nn">glory.utils.diagnostics</span> <span class="kn">import</span> <span class="n">diagnostics</span>
+<span class="kn">from</span> <span class="nn">glory.utils.logger</span> <span class="kn">import</span> <span class="n">init_logger</span>
+<span class="kn">from</span> <span class="nn">glory.utils.cleanup</span> <span class="kn">import</span> <span class="n">cleanup</span>
+
+
+<div class="viewcode-block" id="execute">
+<a class="viewcode-back" href="../../modules.html#glory.model.execute">[docs]</a>
+<span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">basin_id</span><span class="p">,</span> <span class="n">period</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Execute&quot;&quot;&quot;</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Processing basin </span><span class="si">{</span><span class="n">basin_id</span><span class="si">}</span><span class="s1"> for the period </span><span class="si">{</span><span class="n">period</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="c1"># Run main method</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">SupplyCurve</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+                          <span class="n">basin_id</span><span class="o">=</span><span class="n">basin_id</span><span class="p">,</span>
+                          <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span>
+                          <span class="n">demand_gcam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                          <span class="n">capacity_gcam</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="c1"># Run diagnostics for a single basin</span>
+    <span class="n">diagnostics</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span>
+                <span class="n">fig_path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">output_folder</span><span class="p">,</span> <span class="s1">&#39;diagnostics&#39;</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">outputs</span></div>
+
+
+
+<div class="viewcode-block" id="run_model">
+<a class="viewcode-back" href="../../modules.html#glory.model.run_model">[docs]</a>
+<span class="k">def</span> <span class="nf">run_model</span><span class="p">(</span><span class="n">config_file</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run GLORY model&quot;&quot;&quot;</span>
+
+    <span class="c1"># read configuration file</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigReader</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
+
+    <span class="c1"># get the selected periods and basins to run the model</span>
+    <span class="n">periods</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">scales</span><span class="p">[</span><span class="s1">&#39;gcam_period&#39;</span><span class="p">]</span>
+    <span class="n">basin_ids</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">scales</span><span class="p">[</span><span class="s1">&#39;basin_id&#39;</span><span class="p">]</span>
+
+    <span class="c1"># apply all basin numbers if selected &#39;all&#39;/&#39;All&#39;/&#39;ALL&#39;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">basin_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="s1">&#39;all&#39;</span> <span class="ow">in</span> <span class="n">basin_ids</span><span class="o">.</span><span class="n">lower</span><span class="p">()):</span>
+        <span class="n">basin_ids</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">236</span><span class="p">)</span>
+
+    <span class="c1"># initialize</span>
+    <span class="n">init_logger</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">output_folder</span><span class="p">)</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Starting GLORY model.&#39;</span><span class="p">)</span>
+
+    <span class="c1"># loop through all selected periods</span>
+    <span class="k">for</span> <span class="n">period</span> <span class="ow">in</span> <span class="n">periods</span><span class="p">:</span>
+
+        <span class="c1"># create a pool of processes based on the number of cores</span>
+        <span class="k">with</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">()</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
+
+            <span class="c1"># document start time</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+
+            <span class="c1"># run basins in parallel</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">starmap</span><span class="p">(</span><span class="n">execute</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="n">repeat</span><span class="p">(</span><span class="n">config</span><span class="p">),</span> <span class="n">basin_ids</span><span class="p">,</span> <span class="n">repeat</span><span class="p">(</span><span class="n">period</span><span class="p">)))</span>
+
+            <span class="c1"># close the process pool</span>
+            <span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+            <span class="c1"># document finish time</span>
+            <span class="n">finish_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+
+        <span class="c1"># Write outputs for all basins</span>
+        <span class="n">write_outputs</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">result</span><span class="p">)</span>
+
+        <span class="c1"># print logging info</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Glory process completed in </span><span class="si">{</span><span class="nb">round</span><span class="p">((</span><span class="n">finish_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start_time</span><span class="p">),</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2"> seconds for the period </span><span class="si">{</span><span class="n">period</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># cleaning up</span>
+    <span class="n">cleanup</span><span class="p">()</span></div>
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Battelle Memorial Institute.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

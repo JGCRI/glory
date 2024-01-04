@@ -1,27 +1,29 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Modules &mdash; pytemplate 0.0.0 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" type="text/css" />
-      <link rel="stylesheet" href="_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css" type="text/css" />
-      <link rel="stylesheet" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" type="text/css" />
+  <title>Modules Reference &mdash; GLORY 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/design-tabs.js?v=36754332"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Tests" href="tests.html" />
+    <link rel="next" title="Contributing to GLORY" href="contributing.html" />
     <link rel="prev" title="User Guide" href="user_guide.html" /> 
 </head>
 
@@ -34,8 +36,11 @@
           
           
           <a href="index.html" class="icon icon-home">
-            pytemplate
+            GLORY
           </a>
+              <div class="version">
+                1.0.0
+              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -47,14 +52,68 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user_guide.html">User Guide</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Modules</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#pytemplate-model">pytemplate.model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#pytemplate-read-data">pytemplate.read_data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#pytemplate-demand">pytemplate.demand</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Modules Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-glory.model">glory.model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#glory.model.execute"><code class="docutils literal notranslate"><span class="pre">execute()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#glory.model.run_model"><code class="docutils literal notranslate"><span class="pre">run_model()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="tests.html">Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-glory.method.lp">glory.method.lp</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#glory.method.lp.lp_model"><code class="docutils literal notranslate"><span class="pre">lp_model()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#glory.method.lp.lp_solution"><code class="docutils literal notranslate"><span class="pre">lp_solution()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-glory.method.supply_curve">glory.method.supply_curve</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#glory.method.supply_curve.SupplyCurve"><code class="docutils literal notranslate"><span class="pre">SupplyCurve</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#glory.method.supply_curve.SupplyCurve.construct_maxsubresource"><code class="docutils literal notranslate"><span class="pre">SupplyCurve.construct_maxsubresource()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#glory.method.supply_curve.SupplyCurve.construct_supply_curve"><code class="docutils literal notranslate"><span class="pre">SupplyCurve.construct_supply_curve()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#glory.method.supply_curve.SupplyCurve.cost_per_expansion"><code class="docutils literal notranslate"><span class="pre">SupplyCurve.cost_per_expansion()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#glory.method.supply_curve.SupplyCurve.get_20_even_point_supply_curve"><code class="docutils literal notranslate"><span class="pre">SupplyCurve.get_20_even_point_supply_curve()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#glory.method.supply_curve.SupplyCurve.get_20_point_supply_curve"><code class="docutils literal notranslate"><span class="pre">SupplyCurve.get_20_point_supply_curve()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#glory.method.supply_curve.SupplyCurve.get_capacity_yield_constrained"><code class="docutils literal notranslate"><span class="pre">SupplyCurve.get_capacity_yield_constrained()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#glory.method.supply_curve.SupplyCurve.get_capacity_yield_unconstrained"><code class="docutils literal notranslate"><span class="pre">SupplyCurve.get_capacity_yield_unconstrained()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#glory.method.supply_curve.SupplyCurve.get_expansion_sequence"><code class="docutils literal notranslate"><span class="pre">SupplyCurve.get_expansion_sequence()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#glory.method.supply_curve.SupplyCurve.get_reservoir_evap"><code class="docutils literal notranslate"><span class="pre">SupplyCurve.get_reservoir_evap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#glory.method.supply_curve.SupplyCurve.get_yield_gain_sequence"><code class="docutils literal notranslate"><span class="pre">SupplyCurve.get_yield_gain_sequence()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#glory.method.supply_curve.SupplyCurve.levelized_cost"><code class="docutils literal notranslate"><span class="pre">SupplyCurve.levelized_cost()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#glory.method.supply_curve.SupplyCurve.run_lp_model"><code class="docutils literal notranslate"><span class="pre">SupplyCurve.run_lp_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#glory.method.supply_curve.SupplyCurve.set_dx"><code class="docutils literal notranslate"><span class="pre">SupplyCurve.set_dx()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-glory.data.read_config">glory.data.read_config</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#glory.data.read_config.ConfigReader"><code class="docutils literal notranslate"><span class="pre">ConfigReader</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#glory.data.read_config.ConfigReader.create_dir"><code class="docutils literal notranslate"><span class="pre">ConfigReader.create_dir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#glory.data.read_config.ConfigReader.read_config"><code class="docutils literal notranslate"><span class="pre">ConfigReader.read_config()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-glory.data.read_data">glory.data.read_data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#glory.data.read_data.DataLoader"><code class="docutils literal notranslate"><span class="pre">DataLoader</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#glory.data.read_data.DataLoader.get_current_capacity"><code class="docutils literal notranslate"><span class="pre">DataLoader.get_current_capacity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#glory.data.read_data.DataLoader.get_demand_profile"><code class="docutils literal notranslate"><span class="pre">DataLoader.get_demand_profile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#glory.data.read_data.DataLoader.get_max_capacity"><code class="docutils literal notranslate"><span class="pre">DataLoader.get_max_capacity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#glory.data.read_data.DataLoader.load_basin_mapping"><code class="docutils literal notranslate"><span class="pre">DataLoader.load_basin_mapping()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#glory.data.read_data.DataLoader.load_data"><code class="docutils literal notranslate"><span class="pre">DataLoader.load_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#glory.data.read_data.DataLoader.load_gcam_demand"><code class="docutils literal notranslate"><span class="pre">DataLoader.load_gcam_demand()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-glory.data.write_outputs">glory.data.write_outputs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#glory.data.write_outputs.write_csv"><code class="docutils literal notranslate"><span class="pre">write_csv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#glory.data.write_outputs.write_outputs"><code class="docutils literal notranslate"><span class="pre">write_outputs()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-glory.utils.diagnostics">glory.utils.diagnostics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#glory.utils.diagnostics.diagnostics"><code class="docutils literal notranslate"><span class="pre">diagnostics()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to GLORY</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="acknowledgement.html">Acknowledgement</a></li>
 </ul>
@@ -65,7 +124,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">pytemplate</a>
+          <a href="index.html">GLORY</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -73,7 +132,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Modules</li>
+      <li class="breadcrumb-item active">Modules Reference</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/modules.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -83,16 +142,449 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="modules">
-<h1>Modules<a class="headerlink" href="#modules" title="Permalink to this headline"></a></h1>
-<section id="pytemplate-model">
-<h2>pytemplate.model<a class="headerlink" href="#pytemplate-model" title="Permalink to this headline"></a></h2>
+  <section id="modules-reference">
+<h1>Modules Reference<a class="headerlink" href="#modules-reference" title="Link to this heading"></a></h1>
+<section id="module-glory.model">
+<span id="glory-model"></span><h2>glory.model<a class="headerlink" href="#module-glory.model" title="Link to this heading"></a></h2>
+<p>Model interface for GLORY.</p>
+<p>&#64;author: Mengqi Zhao (<a class="reference external" href="mailto:mengqi&#46;zhao&#37;&#52;&#48;pnnl&#46;gov">mengqi<span>&#46;</span>zhao<span>&#64;</span>pnnl<span>&#46;</span>gov</a>)</p>
+<p>&#64;Project: GLORY v1.0</p>
+<p>License:  BSD 2-Clause, see LICENSE and DISCLAIMER files</p>
+<p>Copyright (c) 2023, Battelle Memorial Institute</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="glory.model.execute">
+<span class="sig-prename descclassname"><span class="pre">glory.model.</span></span><span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basin_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/model.html#execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.model.execute" title="Link to this definition"></a></dt>
+<dd><p>Execute</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="glory.model.run_model">
+<span class="sig-prename descclassname"><span class="pre">glory.model.</span></span><span class="sig-name descname"><span class="pre">run_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/model.html#run_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.model.run_model" title="Link to this definition"></a></dt>
+<dd><p>Run GLORY model</p>
+</dd></dl>
+
 </section>
-<section id="pytemplate-read-data">
-<h2>pytemplate.read_data<a class="headerlink" href="#pytemplate-read-data" title="Permalink to this headline"></a></h2>
+<section id="module-glory.method.lp">
+<span id="glory-method-lp"></span><h2>glory.method.lp<a class="headerlink" href="#module-glory.method.lp" title="Link to this heading"></a></h2>
+<p>Linear programming model.</p>
+<p>&#64;author: Mengqi Zhao (<a class="reference external" href="mailto:mengqi&#46;zhao&#37;&#52;&#48;pnnl&#46;gov">mengqi<span>&#46;</span>zhao<span>&#64;</span>pnnl<span>&#46;</span>gov</a>)</p>
+<p>&#64;Project: GLORY v1.0</p>
+<p>License:  BSD 2-Clause, see LICENSE and DISCLAIMER files</p>
+<p>Copyright (c) 2023, Battelle Memorial Institute</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="glory.method.lp.lp_model">
+<span class="sig-prename descclassname"><span class="pre">glory.method.lp.</span></span><span class="sig-name descname"><span class="pre">lp_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Smin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Eg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'glpk'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/method/lp.html#lp_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.method.lp.lp_model" title="Link to this definition"></a></dt>
+<dd><p>Construct Capacity-Yield Curve with Linear Programming Model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>K</strong> – float for reservoir storage capacity</p></li>
+<li><p><strong>Smin</strong> – int for minimum required active storage for the reservoir</p></li>
+<li><p><strong>Ig</strong> – float for annual average inflow (over GCAM 5 year time period) to reference reservoirs that has q total storage capacity of Kgref</p></li>
+<li><p><strong>Eg</strong> – float for annual average evaporation (over GCAM 5 year time period) from reference reservoirs that has q total storage capacity of Kgref</p></li>
+<li><p><strong>f</strong> – dictionary for demand fraction profile</p></li>
+<li><p><strong>p</strong> – dictionary for inflow fraction profile</p></li>
+<li><p><strong>z</strong> – dictionary for evaporation fraction profile</p></li>
+<li><p><strong>m</strong> – float for fraction of flow released from distributed reservoirs</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>array for capacity - yield curve</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="glory.method.lp.lp_solution">
+<span class="sig-prename descclassname"><span class="pre">glory.method.lp.</span></span><span class="sig-name descname"><span class="pre">lp_solution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">K</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basin_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/method/lp.html#lp_solution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.method.lp.lp_solution" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – pyomo model object</p></li>
+<li><p><strong>K</strong> – float for storage capacity</p></li>
+<li><p><strong>basin_id</strong> – int for basin id</p></li>
+<li><p><strong>period</strong> – int for model period</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>data frame for all the water balance variables</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="pytemplate-demand">
-<h2>pytemplate.demand<a class="headerlink" href="#pytemplate-demand" title="Permalink to this headline"></a></h2>
+<section id="module-glory.method.supply_curve">
+<span id="glory-method-supply-curve"></span><h2>glory.method.supply_curve<a class="headerlink" href="#module-glory.method.supply_curve" title="Link to this heading"></a></h2>
+<p>Supply curves.</p>
+<p>&#64;author: Mengqi Zhao (<a class="reference external" href="mailto:mengqi&#46;zhao&#37;&#52;&#48;pnnl&#46;gov">mengqi<span>&#46;</span>zhao<span>&#64;</span>pnnl<span>&#46;</span>gov</a>)</p>
+<p>&#64;Project: GLORY v1.0</p>
+<p>License:  BSD 2-Clause, see LICENSE and DISCLAIMER files</p>
+<p>Copyright (c) 2023, Battelle Memorial Institute</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="glory.method.supply_curve.SupplyCurve">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">glory.method.supply_curve.</span></span><span class="sig-name descname"><span class="pre">SupplyCurve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basin_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">demand_gcam</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacity_gcam</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/method/supply_curve.html#SupplyCurve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.method.supply_curve.SupplyCurve" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Calculate supply curves based on Capacity-Yield curves from linear programming model</p>
+<dl class="simple">
+<dt>USAGE:      SupplyCurve(basin_id=id,</dt><dd><p>period=period,
+demand_gcam=demand_gcam,
+capacity_gcam=capacity_gcam)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="glory.method.supply_curve.SupplyCurve.construct_maxsubresource">
+<span class="sig-name descname"><span class="pre">construct_maxsubresource</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/method/supply_curve.html#SupplyCurve.construct_maxsubresource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.method.supply_curve.SupplyCurve.construct_maxsubresource" title="Link to this definition"></a></dt>
+<dd><p>Construct new maxSubResource dataframe based on the max supply constrained by the max capacity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glory.method.supply_curve.SupplyCurve.construct_supply_curve">
+<span class="sig-name descname"><span class="pre">construct_supply_curve</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/method/supply_curve.html#SupplyCurve.construct_supply_curve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.method.supply_curve.SupplyCurve.construct_supply_curve" title="Link to this definition"></a></dt>
+<dd><p>Construct supply curve.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>2D numpy array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glory.method.supply_curve.SupplyCurve.cost_per_expansion">
+<span class="sig-name descname"><span class="pre">cost_per_expansion</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/method/supply_curve.html#SupplyCurve.cost_per_expansion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.method.supply_curve.SupplyCurve.cost_per_expansion" title="Link to this definition"></a></dt>
+<dd><p>Calculate the cost in 1975 USD per unit reservoir storage capacity expansion</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float in million 1975$</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glory.method.supply_curve.SupplyCurve.get_20_even_point_supply_curve">
+<span class="sig-name descname"><span class="pre">get_20_even_point_supply_curve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">supply_curve_raw</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/method/supply_curve.html#SupplyCurve.get_20_even_point_supply_curve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.method.supply_curve.SupplyCurve.get_20_even_point_supply_curve" title="Link to this definition"></a></dt>
+<dd><p>This is to get 20 evenly spaced point on supply sequence to get the curve.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>supply_curve_raw</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glory.method.supply_curve.SupplyCurve.get_20_point_supply_curve">
+<span class="sig-name descname"><span class="pre">get_20_point_supply_curve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">supply_curve_raw</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/method/supply_curve.html#SupplyCurve.get_20_point_supply_curve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.method.supply_curve.SupplyCurve.get_20_point_supply_curve" title="Link to this definition"></a></dt>
+<dd><p>This is to get 20-point sequence of yields with monotonic cubic spline.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>supply_curve_raw</strong> – dataframe for raw supply curve without supply sequence spacing and smoothing</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glory.method.supply_curve.SupplyCurve.get_capacity_yield_constrained">
+<span class="sig-name descname"><span class="pre">get_capacity_yield_constrained</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/method/supply_curve.html#SupplyCurve.get_capacity_yield_constrained"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.method.supply_curve.SupplyCurve.get_capacity_yield_constrained" title="Link to this definition"></a></dt>
+<dd><p>Constrain the capacity yield curve by max capacity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glory.method.supply_curve.SupplyCurve.get_capacity_yield_unconstrained">
+<span class="sig-name descname"><span class="pre">get_capacity_yield_unconstrained</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/method/supply_curve.html#SupplyCurve.get_capacity_yield_unconstrained"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.method.supply_curve.SupplyCurve.get_capacity_yield_unconstrained" title="Link to this definition"></a></dt>
+<dd><p>Calculate capacity yield curve.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dataframe</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glory.method.supply_curve.SupplyCurve.get_expansion_sequence">
+<span class="sig-name descname"><span class="pre">get_expansion_sequence</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/method/supply_curve.html#SupplyCurve.get_expansion_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.method.supply_curve.SupplyCurve.get_expansion_sequence" title="Link to this definition"></a></dt>
+<dd><p>Determine the evenly spaced intervals for incremental storage capacity and get capacity expansion sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>1D array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glory.method.supply_curve.SupplyCurve.get_reservoir_evap">
+<span class="sig-name descname"><span class="pre">get_reservoir_evap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">capacity_track</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/method/supply_curve.html#SupplyCurve.get_reservoir_evap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.method.supply_curve.SupplyCurve.get_reservoir_evap" title="Link to this definition"></a></dt>
+<dd><p>calculate reservoir surface area based on current storage capacity.
+Calculate reservoir ET in km3/year based on the new storage capacity in each basin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>capacity_track</strong> – list for reservoir capacity expansion track</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glory.method.supply_curve.SupplyCurve.get_yield_gain_sequence">
+<span class="sig-name descname"><span class="pre">get_yield_gain_sequence</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/method/supply_curve.html#SupplyCurve.get_yield_gain_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.method.supply_curve.SupplyCurve.get_yield_gain_sequence" title="Link to this definition"></a></dt>
+<dd><p>Calculate yield increments sequence based on reservoir storage capacity expansion.
+two segments of yield increment sequences: (1) before max capacity and (2) after max capacity</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>1D array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glory.method.supply_curve.SupplyCurve.levelized_cost">
+<span class="sig-name descname"><span class="pre">levelized_cost</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/method/supply_curve.html#SupplyCurve.levelized_cost"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.method.supply_curve.SupplyCurve.levelized_cost" title="Link to this definition"></a></dt>
+<dd><p>Calculate levelized cost of storage capacity (LCOSC) as 1975 USD per unit water yield.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>1D numpy array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glory.method.supply_curve.SupplyCurve.run_lp_model">
+<span class="sig-name descname"><span class="pre">run_lp_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">capacity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacity_track</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/method/supply_curve.html#SupplyCurve.run_lp_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.method.supply_curve.SupplyCurve.run_lp_model" title="Link to this definition"></a></dt>
+<dd><p>Run LP model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>capacity</strong> – float for target capacity</p></li>
+<li><p><strong>capacity_track</strong> – list for tracking capacity at each iteration</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>value for optimized yield</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glory.method.supply_curve.SupplyCurve.set_dx">
+<span class="sig-name descname"><span class="pre">set_dx</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/method/supply_curve.html#SupplyCurve.set_dx"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.method.supply_curve.SupplyCurve.set_dx" title="Link to this definition"></a></dt>
+<dd><p>The algorithm of choosing dx in this section is to prevent the LP model running over 500 iterations,
+or not enough iterations (&lt;50).
+However, another thing to notice is that the inflection point when reaches mean annual inflow.
+This requires we make sure there are enough iteration before the inflection point (20 or more).
+The algorithm is used to detect if the yield value with K = dx is less than 0.05 of Ig or
+Y0+0.05(Ig-Y0) if Y0 != 0, dx is reduced to 1/2 until dx satisfies the condition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>none</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-glory.data.read_config">
+<span id="glory-data-read-config"></span><h2>glory.data.read_config<a class="headerlink" href="#module-glory.data.read_config" title="Link to this heading"></a></h2>
+<p>Module to load configuration data.</p>
+<p>&#64;author: Mengqi Zhao (<a class="reference external" href="mailto:mengqi&#46;zhao&#37;&#52;&#48;pnnl&#46;gov">mengqi<span>&#46;</span>zhao<span>&#64;</span>pnnl<span>&#46;</span>gov</a>)</p>
+<p>&#64;Project: GLORY v1.0</p>
+<p>License:  BSD 2-Clause, see LICENSE and DISCLAIMER files</p>
+<p>Copyright (c) 2023, Battelle Memorial Institute</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="glory.data.read_config.ConfigReader">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">glory.data.read_config.</span></span><span class="sig-name descname"><span class="pre">ConfigReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/data/read_config.html#ConfigReader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.data.read_config.ConfigReader" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Read config file</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="glory.data.read_config.ConfigReader.create_dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pth</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/data/read_config.html#ConfigReader.create_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.data.read_config.ConfigReader.create_dir" title="Link to this definition"></a></dt>
+<dd><p>Check to see if the target path exists and create directory.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glory.data.read_config.ConfigReader.read_config">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">read_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/data/read_config.html#ConfigReader.read_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.data.read_config.ConfigReader.read_config" title="Link to this definition"></a></dt>
+<dd><p>Load configuration file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_file</strong> (<em>string</em>) – configuration file path</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-glory.data.read_data">
+<span id="glory-data-read-data"></span><h2>glory.data.read_data<a class="headerlink" href="#module-glory.data.read_data" title="Link to this heading"></a></h2>
+<p>Module to load input data files.</p>
+<p>&#64;author: Mengqi Zhao (<a class="reference external" href="mailto:mengqi&#46;zhao&#37;&#52;&#48;pnnl&#46;gov">mengqi<span>&#46;</span>zhao<span>&#64;</span>pnnl<span>&#46;</span>gov</a>)</p>
+<p>&#64;Project: GLORY v1.0</p>
+<p>License:  BSD 2-Clause, see LICENSE and DISCLAIMER files</p>
+<p>Copyright (c) 2023, Battelle Memorial Institute</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="glory.data.read_data.DataLoader">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">glory.data.read_data.</span></span><span class="sig-name descname"><span class="pre">DataLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basin_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2020</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">demand_gcam</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacity_gcam</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/data/read_data.html#DataLoader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.data.read_data.DataLoader" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Load Data</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="glory.data.read_data.DataLoader.get_current_capacity">
+<span class="sig-name descname"><span class="pre">get_current_capacity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/data/read_data.html#DataLoader.get_current_capacity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.data.read_data.DataLoader.get_current_capacity" title="Link to this definition"></a></dt>
+<dd><p>calculate if there will be expansion on storage capacity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float value for storage capacity</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glory.data.read_data.DataLoader.get_demand_profile">
+<span class="sig-name descname"><span class="pre">get_demand_profile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/data/read_data.html#DataLoader.get_demand_profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.data.read_data.DataLoader.get_demand_profile" title="Link to this definition"></a></dt>
+<dd><p>Calculate total demand profile with historical sectoral profile and sectoral demand.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_type</strong> – string for input demand data. ‘hist’ or ‘gcam’</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glory.data.read_data.DataLoader.get_max_capacity">
+<span class="sig-name descname"><span class="pre">get_max_capacity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/data/read_data.html#DataLoader.get_max_capacity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.data.read_data.DataLoader.get_max_capacity" title="Link to this definition"></a></dt>
+<dd><p>Adjust maximum storage capacity value only if the basin have no expandable capacity.
+Max storage capacity input data for some basins is already adjusted based on the historical storage capacity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float64</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glory.data.read_data.DataLoader.load_basin_mapping">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_basin_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f_basin_country</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_basin_region</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">7</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/data/read_data.html#DataLoader.load_basin_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.data.read_data.DataLoader.load_basin_mapping" title="Link to this definition"></a></dt>
+<dd><p>Mapping different formats of basin names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fn</strong> – string for full file path</p></li>
+<li><p><strong>header_num</strong> – integer for numbers of rows to skip until the header</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>dataframe</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glory.data.read_data.DataLoader.load_data">
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/data/read_data.html#DataLoader.load_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.data.read_data.DataLoader.load_data" title="Link to this definition"></a></dt>
+<dd><p>Load data from a CSV file to pandas dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fn</strong> – string for name of file to load</p></li>
+<li><p><strong>header_num</strong> – integer for number of lines in file to skip, if text or csv file</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>pandas dataframe</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="glory.data.read_data.DataLoader.load_gcam_demand">
+<span class="sig-name descname"><span class="pre">load_gcam_demand</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/data/read_data.html#DataLoader.load_gcam_demand"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.data.read_data.DataLoader.load_gcam_demand" title="Link to this definition"></a></dt>
+<dd><p>Load and Format data extract from GCAM using gcamwrapper. The data should be for 235 basins, 6 demand sectors,
+and a single time period.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dataframe for sectoral annual demand for selected basin</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-glory.data.write_outputs">
+<span id="glory-data-write-outputs"></span><h2>glory.data.write_outputs<a class="headerlink" href="#module-glory.data.write_outputs" title="Link to this heading"></a></h2>
+<p>Module to write output data.</p>
+<p>&#64;author: Mengqi Zhao (<a class="reference external" href="mailto:mengqi&#46;zhao&#37;&#52;&#48;pnnl&#46;gov">mengqi<span>&#46;</span>zhao<span>&#64;</span>pnnl<span>&#46;</span>gov</a>)</p>
+<p>&#64;Project: GLORY v1.0</p>
+<p>License:  BSD 2-Clause, see LICENSE and DISCLAIMER files</p>
+<p>Copyright (c) 2023, Battelle Memorial Institute</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="glory.data.write_outputs.write_csv">
+<span class="sig-prename descclassname"><span class="pre">glory.data.write_outputs.</span></span><span class="sig-name descname"><span class="pre">write_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/data/write_outputs.html#write_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.data.write_outputs.write_csv" title="Link to this definition"></a></dt>
+<dd><p>Write csv outputs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>var</strong> – string for output variable name</p></li>
+<li><p><strong>data</strong> – df or numpy array for outputs</p></li>
+<li><p><strong>out_path</strong> – output_path</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="glory.data.write_outputs.write_outputs">
+<span class="sig-prename descclassname"><span class="pre">glory.data.write_outputs.</span></span><span class="sig-name descname"><span class="pre">write_outputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/data/write_outputs.html#write_outputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.data.write_outputs.write_outputs" title="Link to this definition"></a></dt>
+<dd><p>Write outputs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>outputs</strong> – class object for outputs</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-glory.utils.diagnostics">
+<span id="glory-utils-diagnostics"></span><h2>glory.utils.diagnostics<a class="headerlink" href="#module-glory.utils.diagnostics" title="Link to this heading"></a></h2>
+<p>Module to create diagnostic figures.</p>
+<p>&#64;author: Mengqi Zhao (<a class="reference external" href="mailto:mengqi&#46;zhao&#37;&#52;&#48;pnnl&#46;gov">mengqi<span>&#46;</span>zhao<span>&#64;</span>pnnl<span>&#46;</span>gov</a>)</p>
+<p>&#64;Project: GLORY v1.0</p>
+<p>License:  BSD 2-Clause, see LICENSE and DISCLAIMER files</p>
+<p>Copyright (c) 2023, Battelle Memorial Institute</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="glory.utils.diagnostics.diagnostics">
+<span class="sig-prename descclassname"><span class="pre">glory.utils.diagnostics.</span></span><span class="sig-name descname"><span class="pre">diagnostics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/utils/diagnostics.html#diagnostics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.utils.diagnostics.diagnostics" title="Link to this definition"></a></dt>
+<dd><p>Plot capacity yield curve.</p>
+</dd></dl>
+
 </section>
 </section>
 
@@ -101,13 +593,13 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="user_guide.html" class="btn btn-neutral float-left" title="User Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="tests.html" class="btn btn-neutral float-right" title="Tests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="contributing.html" class="btn btn-neutral float-right" title="Contributing to GLORY" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright JGCRI 2023.</p>
+    <p>&#169; Copyright 2021, Battelle Memorial Institute.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

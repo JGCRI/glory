@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>glory.data.read_data &mdash; GLORY 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            GLORY
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Modules Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing to GLORY</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../acknowledgement.html">Acknowledgement</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">GLORY</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">glory.data.read_data</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for glory.data.read_data</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module to load input data files.</span>
+
+<span class="sd">@author: Mengqi Zhao (mengqi.zhao@pnnl.gov)</span>
+
+<span class="sd">@Project: GLORY v1.0</span>
+
+<span class="sd">License:  BSD 2-Clause, see LICENSE and DISCLAIMER files</span>
+
+<span class="sd">Copyright (c) 2023, Battelle Memorial Institute</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<div class="viewcode-block" id="DataLoader">
+<a class="viewcode-back" href="../../../modules.html#glory.data.read_data.DataLoader">[docs]</a>
+<span class="k">class</span> <span class="nc">DataLoader</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load Data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">global</span> <span class="n">capacity_gcam_pre</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">basin_id</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">base_period</span><span class="o">=</span><span class="mi">2020</span><span class="p">,</span> <span class="n">demand_gcam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">capacity_gcam</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialization</span>
+
+<span class="sd">        :param basin_id:            integer for basin id to select</span>
+<span class="sd">        :param period:              integer for period (year)</span>
+<span class="sd">        :param base_period:         integer for base year</span>
+<span class="sd">        :param demand_gcam:         dataframe for GCAM sovled demand</span>
+<span class="sd">        :param capacity_gcam:       dataframe for storage capacity based on GCAM solved runoff demand</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Starting function read_data for basin </span><span class="si">{</span><span class="n">basin_id</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">basin_id</span> <span class="o">=</span> <span class="n">basin_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">period</span> <span class="o">=</span> <span class="n">period</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_period</span> <span class="o">=</span> <span class="n">base_period</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">demand_gcam</span> <span class="o">=</span> <span class="n">demand_gcam</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">capacity_gcam</span> <span class="o">=</span> <span class="n">capacity_gcam</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">climate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">input_files</span><span class="p">[</span><span class="s1">&#39;climate&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">profile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">input_files</span><span class="p">[</span><span class="s1">&#39;monthly_profile&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">demand_hist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">input_files</span><span class="p">[</span><span class="s1">&#39;sectoral_demand&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reservoir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">input_files</span><span class="p">[</span><span class="s1">&#39;reservoir&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slope</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">input_files</span><span class="p">[</span><span class="s1">&#39;slope&#39;</span><span class="p">])[</span><span class="s1">&#39;slope&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basin_name_std</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_basin_mapping</span><span class="p">(</span><span class="n">f_basin_country</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">reference_files</span><span class="p">[</span><span class="s1">&#39;basin_to_country_mapping&#39;</span><span class="p">],</span>
+                                                      <span class="n">f_basin_region</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">reference_files</span><span class="p">[</span><span class="s1">&#39;basin_to_region_mapping&#39;</span><span class="p">],</span>
+                                                      <span class="n">header_num</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">inflow</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">climate</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">climate</span><span class="p">[</span><span class="s1">&#39;period&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">period</span><span class="p">,</span> <span class="s1">&#39;smooth_runoff_km3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">evap_depth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">climate</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">climate</span><span class="p">[</span><span class="s1">&#39;period&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">period</span><span class="p">,</span> <span class="s1">&#39;pet_km&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">res_area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reservoir</span><span class="p">[</span><span class="s1">&#39;nonhydro_area_km2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">inflow_profile</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="p">[</span><span class="s1">&#39;period&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">period</span><span class="p">,</span> <span class="s1">&#39;month&#39;</span><span class="p">],</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="p">[</span><span class="s1">&#39;period&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">period</span><span class="p">,</span> <span class="s1">&#39;inflow&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">evap_profile</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="p">[</span><span class="s1">&#39;period&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">period</span><span class="p">,</span> <span class="s1">&#39;month&#39;</span><span class="p">],</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="p">[</span><span class="s1">&#39;period&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">period</span><span class="p">,</span> <span class="s1">&#39;pet&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">demand_profile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_demand_profile</span><span class="p">()</span>
+
+        <span class="c1"># capacity values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">no_expansion</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_capacity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_max_capacity</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_capacity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_capacity</span><span class="p">()</span>
+
+        <span class="c1"># expected incremental size for reservoir storage capacity expansion</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expan_incr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reservoir</span><span class="p">[</span><span class="s1">&#39;mean_cap_km3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># define constant</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">storage_min</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">m</span> <span class="o">=</span> <span class="mf">0.1</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Function read_data completed successfully.&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DataLoader.load_data">
+<a class="viewcode-back" href="../../../modules.html#glory.data.read_data.DataLoader.load_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">header_num</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load data from a CSV file to pandas dataframe.</span>
+
+<span class="sd">        :param fn:              string for name of file to load</span>
+<span class="sd">        :param header_num:      integer for number of lines in file to skip, if text or csv file</span>
+
+<span class="sd">        :return:                pandas dataframe</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s2">&quot;Error: File does not exist:&quot;</span><span class="p">,</span> <span class="n">fn</span><span class="p">)</span>
+
+        <span class="c1"># for CSV files</span>
+        <span class="k">elif</span> <span class="n">fn</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.csv&#39;</span><span class="p">):</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="n">header_num</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;basin_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">basin_id</span><span class="p">]</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;File </span><span class="si">{}</span><span class="s2"> has unrecognized extension&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fn</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="DataLoader.load_gcam_demand">
+<a class="viewcode-back" href="../../../modules.html#glory.data.read_data.DataLoader.load_gcam_demand">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_gcam_demand</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load and Format data extract from GCAM using gcamwrapper. The data should be for 235 basins, 6 demand sectors,</span>
+<span class="sd">        and a single time period.</span>
+
+<span class="sd">        :return:                dataframe for sectoral annual demand for selected basin</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">demand_gcam</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+            <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">demand_gcam</span>
+
+            <span class="c1"># convert objects columns to string</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;sector&#39;</span><span class="p">,</span> <span class="s1">&#39;subsector&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;physical-demand&#39;</span><span class="p">]]</span><span class="o">.</span> \
+                <span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;subsector&#39;</span><span class="p">:</span> <span class="s1">&#39;gcam_basin_name&#39;</span><span class="p">,</span> <span class="s1">&#39;physical-demand&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span><span class="p">})</span>
+            <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;sector&#39;</span><span class="p">,</span> <span class="s1">&#39;gcam_basin_name&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;sector&#39;</span><span class="p">,</span> <span class="s1">&#39;gcam_basin_name&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;string&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;raise&#39;</span><span class="p">)</span>
+
+            <span class="c1"># format water withdrawal extracted from GCAM using gcamwrapper</span>
+            <span class="n">df</span><span class="p">[</span><span class="s1">&#39;sector&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;sector&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">pat</span><span class="o">=</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;string&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;raise&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+
+            <span class="c1"># replace demand sector names</span>
+            <span class="n">rep</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;an&#39;</span><span class="p">:</span> <span class="s1">&#39;livestock&#39;</span><span class="p">,</span> <span class="s1">&#39;elec&#39;</span><span class="p">:</span> <span class="s1">&#39;electric&#39;</span><span class="p">,</span> <span class="s1">&#39;ind&#39;</span><span class="p">:</span> <span class="s1">&#39;industry&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;irr&#39;</span><span class="p">:</span> <span class="s1">&#39;irrigation&#39;</span><span class="p">,</span> <span class="s1">&#39;muni&#39;</span><span class="p">:</span> <span class="s1">&#39;domestic&#39;</span><span class="p">,</span> <span class="s1">&#39;pri&#39;</span><span class="p">:</span> <span class="s1">&#39;mining&#39;</span><span class="p">}</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">&#39;sector&#39;</span><span class="p">:</span> <span class="n">rep</span><span class="p">})</span>
+
+            <span class="c1"># add standard basin id and basin name</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basin_name_std</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;gcam_basin_name&#39;</span><span class="p">)</span>
+
+            <span class="c1"># filter to selected basin</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;basin_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">basin_id</span><span class="p">]</span>
+
+            <span class="c1"># aggregate demand for each sector within each basin</span>
+            <span class="n">grp</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;basin_id&#39;</span><span class="p">,</span> <span class="s1">&#39;gcam_basin_name&#39;</span><span class="p">,</span> <span class="s1">&#39;sector&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">],</span> <span class="n">as_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+            <span class="c1"># rename column &#39;value&#39;</span>
+            <span class="n">grp</span> <span class="o">=</span> <span class="n">grp</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;demand_ann&#39;</span><span class="p">})</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">grp</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">grp</span></div>
+
+
+<div class="viewcode-block" id="DataLoader.load_basin_mapping">
+<a class="viewcode-back" href="../../../modules.html#glory.data.read_data.DataLoader.load_basin_mapping">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">load_basin_mapping</span><span class="p">(</span><span class="n">f_basin_country</span><span class="p">,</span> <span class="n">f_basin_region</span><span class="p">,</span> <span class="n">header_num</span><span class="o">=</span><span class="mi">7</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Mapping different formats of basin names.</span>
+
+<span class="sd">        :param fn:              string for full file path</span>
+<span class="sd">        :param header_num:      integer for numbers of rows to skip until the header</span>
+
+<span class="sd">        :return:                dataframe</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># load basin mapping data</span>
+        <span class="n">df_basin</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">f_basin_country</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="n">header_num</span><span class="p">)</span>
+        <span class="n">df_region</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">f_basin_region</span><span class="p">)</span>
+
+        <span class="c1"># select relevant columns and rename</span>
+        <span class="n">df_basin</span> <span class="o">=</span> <span class="n">df_basin</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s1">&#39;GCAM_basin_ID&#39;</span><span class="p">,</span> <span class="s1">&#39;Basin_long_name&#39;</span><span class="p">,</span> <span class="s1">&#39;GLU_name&#39;</span><span class="p">]]</span>
+
+        <span class="n">df_basin</span> <span class="o">=</span> <span class="n">df_basin</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;GCAM_basin_ID&#39;</span><span class="p">:</span> <span class="s1">&#39;basin_id&#39;</span><span class="p">,</span>
+                                            <span class="s1">&#39;Basin_long_name&#39;</span><span class="p">:</span> <span class="s1">&#39;basin_name&#39;</span><span class="p">,</span>
+                                            <span class="s1">&#39;GLU_name&#39;</span><span class="p">:</span> <span class="s1">&#39;gcam_basin_name&#39;</span><span class="p">})</span>
+
+        <span class="c1"># convert from object to string or int</span>
+        <span class="n">df_basin</span><span class="p">[[</span><span class="s1">&#39;basin_name&#39;</span><span class="p">,</span> <span class="s1">&#39;gcam_basin_name&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">df_basin</span><span class="p">[[</span><span class="s1">&#39;basin_name&#39;</span><span class="p">,</span> <span class="s1">&#39;gcam_basin_name&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;string&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;raise&#39;</span><span class="p">)</span>
+        <span class="n">df_basin</span><span class="p">[</span><span class="s1">&#39;basin_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_basin</span><span class="p">[</span><span class="s1">&#39;basin_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int32&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;raise&#39;</span><span class="p">)</span>
+
+        <span class="c1"># join region name</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_basin</span><span class="p">,</span> <span class="n">df_region</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;gcam_basin_name&#39;</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="DataLoader.get_demand_profile">
+<a class="viewcode-back" href="../../../modules.html#glory.data.read_data.DataLoader.get_demand_profile">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_demand_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate total demand profile with historical sectoral profile and sectoral demand.</span>
+
+<span class="sd">        :param data_type:           string for input demand data. &#39;hist&#39; or &#39;gcam&#39;</span>
+
+<span class="sd">        :return:                    dictionary</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">period</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_period</span><span class="p">:</span>
+            <span class="c1"># get historical demand</span>
+            <span class="n">demand_ann</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">demand_hist</span><span class="p">[[</span><span class="s1">&#39;sector&#39;</span><span class="p">,</span> <span class="s1">&#39;demand_ann&#39;</span><span class="p">]]</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">period</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_period</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_gcam_demand</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">demand_ann</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">demand_hist</span><span class="p">[[</span><span class="s1">&#39;sector&#39;</span><span class="p">,</span> <span class="s1">&#39;demand_ann&#39;</span><span class="p">]]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_gcam_demand</span><span class="p">()[</span><span class="s1">&#39;demand_ann&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Basin: &#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">basin_id</span><span class="p">,</span> <span class="s1">&#39; has a sum of 0 demand from all sectors. Replace demand profile with historical profile.&#39;</span><span class="p">)</span>
+                    <span class="n">demand_ann</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">demand_hist</span><span class="p">[[</span><span class="s1">&#39;sector&#39;</span><span class="p">,</span> <span class="s1">&#39;demand_ann&#39;</span><span class="p">]]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># reformat gcam withdrawal</span>
+                    <span class="n">demand_ann</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_gcam_demand</span><span class="p">()[[</span><span class="s1">&#39;sector&#39;</span><span class="p">,</span> <span class="s1">&#39;demand_ann&#39;</span><span class="p">]]</span>
+
+        <span class="c1"># only keep sectoral demand profiles and melt</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="p">[</span><span class="s1">&#39;period&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">period</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;basin_id&#39;</span><span class="p">,</span> <span class="s1">&#39;basin_name&#39;</span><span class="p">,</span> <span class="s1">&#39;period&#39;</span><span class="p">,</span> <span class="s1">&#39;pet&#39;</span><span class="p">,</span> <span class="s1">&#39;inflow&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span> \
+            <span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;month&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;variable&#39;</span><span class="p">:</span> <span class="s1">&#39;sector&#39;</span><span class="p">})</span>
+
+        <span class="c1"># merge annual demand and sectoral demand profiles</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">demand_ann</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;sector&#39;</span><span class="p">])</span>
+
+        <span class="c1"># calculate demand amount for each demand sector</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;demand&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;demand_ann&#39;</span><span class="p">]</span>
+
+        <span class="c1"># calculate total monthly demand by aggregating all demand sectors</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;month&#39;</span><span class="p">,</span> <span class="n">as_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+        <span class="c1"># calculate profile</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;profile&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;demand&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;demand_ann&#39;</span><span class="p">]</span>
+
+        <span class="c1"># construct dictionary for month and demand profile</span>
+        <span class="n">dict_out</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;month&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;profile&#39;</span><span class="p">]))</span>
+
+        <span class="k">return</span> <span class="n">dict_out</span></div>
+
+
+<div class="viewcode-block" id="DataLoader.get_current_capacity">
+<a class="viewcode-back" href="../../../modules.html#glory.data.read_data.DataLoader.get_current_capacity">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_current_capacity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        calculate if there will be expansion on storage capacity.</span>
+
+<span class="sd">        :return:                float value for storage capacity</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">period</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_period</span><span class="p">:</span>
+            <span class="c1"># existing storage capacity</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reservoir</span><span class="p">[</span><span class="s1">&#39;nonhydro_cap_km3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">capacity_gcam</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">period</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_period</span> <span class="o">+</span> <span class="mi">5</span><span class="p">:</span>
+
+                <span class="n">val</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reservoir</span><span class="p">[</span><span class="s1">&#39;nonhydro_cap_km3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                          <span class="bp">self</span><span class="o">.</span><span class="n">capacity_gcam</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">capacity_gcam</span><span class="p">[</span><span class="s1">&#39;basin_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">basin_id</span><span class="p">,</span> <span class="s1">&#39;capacity_gcam&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># if gcam solved capacity is larger than previous capacity, then expand</span>
+                <span class="n">capacity_gcam_pre_basin</span> <span class="o">=</span> <span class="n">capacity_gcam_pre</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">capacity_gcam_pre</span><span class="p">[</span><span class="s1">&#39;basin_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">basin_id</span><span class="p">,</span> <span class="s1">&#39;capacity_gcam&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">capacity_gcam_basin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">capacity_gcam</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">capacity_gcam</span><span class="p">[</span><span class="s1">&#39;basin_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">basin_id</span><span class="p">,</span> <span class="s1">&#39;capacity_gcam&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">capacity_gcam_basin</span> <span class="o">&gt;</span> <span class="n">capacity_gcam_pre_basin</span><span class="p">:</span>
+                    <span class="n">val</span> <span class="o">=</span> <span class="n">capacity_gcam_basin</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">val</span> <span class="o">=</span> <span class="n">capacity_gcam_pre_basin</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reservoir</span><span class="p">[</span><span class="s1">&#39;nonhydro_cap_km3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">val</span></div>
+
+
+<div class="viewcode-block" id="DataLoader.get_max_capacity">
+<a class="viewcode-back" href="../../../modules.html#glory.data.read_data.DataLoader.get_max_capacity">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_max_capacity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adjust maximum storage capacity value only if the basin have no expandable capacity.</span>
+<span class="sd">        Max storage capacity input data for some basins is already adjusted based on the historical storage capacity.</span>
+
+<span class="sd">        :return:            float64</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reservoir</span><span class="p">[</span><span class="s1">&#39;expan_cap_km3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># adjust max storage cap to mean annual runoff both max and current capacities are 0</span>
+        <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">climate</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">climate</span><span class="p">[</span><span class="s1">&#39;period&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">period</span><span class="p">,</span> <span class="s1">&#39;smooth_runoff_km3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">val</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Battelle Memorial Institute.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

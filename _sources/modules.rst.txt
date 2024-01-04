@@ -1,26 +1,58 @@
-Modules
-=======
+Modules Reference
+=================
 
-pytemplate.model
--------------------
+glory.model
+-----------
 
-.. automodule:: pytemplate.model
+.. automodule:: glory.model
    :members:
    :undoc-members:
    :show-inheritance:
 
-pytemplate.read_data
--------------------
+glory.method.lp
+---------------
 
-.. automodule:: pytemplate.read_data
+.. automodule:: glory.method.lp
    :members:
    :undoc-members:
    :show-inheritance:
 
-pytemplate.demand
--------------------
+glory.method.supply_curve
+-------------------------
 
-.. automodule:: pytemplate.demand
+.. automodule:: glory.method.supply_curve
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+glory.data.read_config
+----------------------
+
+.. automodule:: glory.data.read_config
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+glory.data.read_data
+--------------------
+
+.. automodule:: glory.data.read_data
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+glory.data.write_outputs
+------------------------
+
+.. automodule:: glory.data.write_outputs
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+glory.utils.diagnostics
+-----------------------
+
+.. automodule:: glory.utils.diagnostics
    :members:
    :undoc-members:
    :show-inheritance:

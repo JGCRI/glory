@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Getting Started &mdash; pytemplate 0.0.0 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" type="text/css" />
-      <link rel="stylesheet" href="_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css" type="text/css" />
-      <link rel="stylesheet" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" type="text/css" />
+  <title>Getting Started &mdash; GLORY 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/design-tabs.js?v=36754332"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -34,8 +36,11 @@
           
           
           <a href="index.html" class="icon icon-home">
-            pytemplate
+            GLORY
           </a>
+              <div class="version">
+                1.0.0
+              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -46,16 +51,14 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#motivation">Motivation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#example-data">Example Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#run">Run</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="user_guide.html">User Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tests.html">Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to GLORY</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="acknowledgement.html">Acknowledgement</a></li>
 </ul>
@@ -66,7 +69,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">pytemplate</a>
+          <a href="index.html">GLORY</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -85,24 +88,52 @@
            <div itemprop="articleBody">
              
   <section id="getting-started">
-<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h1>
-<p>This page walks you through the steps of installing <strong>pytemplate</strong> and running an example.</p>
-<section id="motivation">
-<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline"></a></h2>
-<p>In progress…</p>
-</section>
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h1>
+<p>This page walks you through the steps of installing <code class="docutils literal notranslate"><span class="pre">GLORY</span></code> and running an example.</p>
 <section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h2>
-<p>In progress…</p>
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p>As a prerequisite, you’ll need to have Python installed (version 3.9 or above).</p>
+<p><code class="docutils literal notranslate"><span class="pre">GLORY</span></code> can be installed from GitHub using <code class="docutils literal notranslate"><span class="pre">pip</span></code> in a command prompt or terminal:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/JGCRI/glory
+</pre></div>
+</div>
+<p>This will automatically install the dependencies. In order to avoid package version conflicts, consider using a virtual environment.</p>
+<p>User can also clone the <code class="docutils literal notranslate"><span class="pre">GLORY</span></code> package from GitHub. Navigate to a desired directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/JGCRI/glory
+</pre></div>
+</div>
+<p>Try importing <code class="docutils literal notranslate"><span class="pre">GLORY</span></code> to confirm that installation was successful:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glory</span>
+
+<span class="n">glory</span><span class="o">.</span><span class="n">__version__</span>
+</pre></div>
+</div>
 </section>
 <section id="example-data">
-<h2>Example Data<a class="headerlink" href="#example-data" title="Permalink to this headline"></a></h2>
-<p>In progress…</p>
+<h2>Example Data<a class="headerlink" href="#example-data" title="Link to this heading"></a></h2>
+<p>Example data and configuration file can be downloaded from Zenodo through this <a class="reference external" href="https://zenodo.org/records/10093575">link</a>, or by using the <code class="docutils literal notranslate"><span class="pre">GLORY</span></code> function:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glory</span>
+
+<span class="c1"># The example data will be downloaded to the cloned package folder by default.</span>
+<span class="n">glory</span><span class="o">.</span><span class="n">get_example_data</span><span class="p">()</span>
+
+<span class="c1"># Or</span>
+
+<span class="c1"># If the user didn&#39;t clone the package, then specify a desired download location.</span>
+<span class="n">glory</span><span class="o">.</span><span class="n">get_example_data</span><span class="p">(</span><span class="n">example_data_directory</span><span class="o">=</span><span class="s1">&#39;path/to/desired/location&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 <section id="run">
-<h2>Run<a class="headerlink" href="#run" title="Permalink to this headline"></a></h2>
-<p>In progress…</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">code</span> <span class="n">chunk</span>
+<h2>Run<a class="headerlink" href="#run" title="Link to this heading"></a></h2>
+<p>With the example data downloaded, a simple configuration can be run:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glory</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1"># modify the path if downloaded to a different directory</span>
+<span class="n">config_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">glory</span><span class="o">.</span><span class="n">default_download_dir</span><span class="p">,</span> <span class="s1">&#39;example&#39;</span><span class="p">,</span> <span class="s1">&#39;example_config.yml&#39;</span><span class="p">)</span>
+
+<span class="n">glory</span><span class="o">.</span><span class="n">run_model</span><span class="p">(</span><span class="n">config_file</span><span class="o">=</span><span class="n">config_file</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -119,7 +150,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright JGCRI 2023.</p>
+    <p>&#169; Copyright 2021, Battelle Memorial Institute.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
