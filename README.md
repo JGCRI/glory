@@ -17,7 +17,7 @@ alt="https://jgcri.github.io/glory/" height="60"/></a>
 
 # Citation
 
-> Zhao, M., Wild, T.B., Vernon, C., 2024. GLORY - A Python package the Global Reservoir Yield (GLORY) model.. (In progress) Journal of Open Source Software, DOI: XXXX
+> Zhao, M., Wild, T.B., Vernon, C., 2024. GLORY: a python package for global reservoir water yield and cost estimation. (In progress) Journal of Open Source Software, DOI: XXXX
 
 
 # Related Publications
