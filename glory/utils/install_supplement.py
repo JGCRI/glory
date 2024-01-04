@@ -1,12 +1,24 @@
+"""
+Module to download example data.
+
+@author: Mengqi Zhao (mengqi.zhao@pnnl.gov)
+
+@Project: GLORY v1.0
+
+License:  BSD 2-Clause, see LICENSE and DISCLAIMER files
+
+Copyright (c) 2023, Battelle Memorial Institute
+
+"""
+
 import os
 import zipfile
 import requests
 import importlib.resources
 import importlib.metadata
-import logging
 from io import BytesIO as BytesIO
 
-default_download_dir = str(importlib.resources.files('glory'))
+default_download_dir = os.path.join(os.path.dirname(str(importlib.resources.files('glory'))), 'example')
 
 
 class InstallSupplement:
@@ -20,7 +32,7 @@ class InstallSupplement:
 
     # URL for DOI minted example data hosted on Zenodo
     DATA_VERSION_URLS = {
-        '1.0.0': 'https://zenodo.org/records/8436685/files/inputs_glory.zip?download=1'
+        '1.0.0': 'https://zenodo.org/records/10452783/files/example.zip?download=1'
     }
 
     def __init__(self, example_data_directory):
@@ -43,15 +55,23 @@ class InstallSupplement:
             raise(msg.format(current_version))
 
         # retrieve content from URL
-        logging.info(f"Downloading example data for GLORY version {current_version}. This might take a few minutes.")
-        r = requests.get(data_link)
+        try:
+            print(f"Downloading example data for GLORY version {current_version}. This might take a few minutes.")
+            r = requests.get(data_link)
+            r.raise_for_status()
 
+        except requests.RequestException as err:
+            raise f"An error occurred during the download: {err}"
+
+        # unzipp file
         with zipfile.ZipFile(BytesIO(r.content)) as zipped:
 
             # extract each file in the zipped dir to the project
             for f in zipped.namelist():
-                logging.ingo("Unzipped: {}".format(os.path.join(self.example_data_directory, f)))
+                print("Unzipped: {}".format(os.path.join(self.example_data_directory, f)))
                 zipped.extract(f, self.example_data_directory)
+
+        print(f"Download completed.")
 
 
 def get_example_data(example_data_directory=None):
@@ -66,9 +86,18 @@ def get_example_data(example_data_directory=None):
 
     """
 
+    # download to package folder by default
     if example_data_directory is None:
         example_data_directory = default_download_dir  # GLORY package directory
 
-    zen = InstallSupplement(example_data_directory)
+    # if the 'example' folder already exists in the path, then skip the download
+    if os.path.exists(example_data_directory) and os.listdir(example_data_directory):
+        print(f"The directory at {example_data_directory} is not empty, "
+              f"so download has been skipped. "
+              f"To download data again, please delete existing folder or save to an alternative directory.")
+    else:
+        os.makedirs(example_data_directory, exist_ok=True)
 
-    zen.fetch_zenodo()
+        zen = InstallSupplement(example_data_directory)
+
+        zen.fetch_zenodo()

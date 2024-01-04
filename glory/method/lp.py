@@ -1,7 +1,21 @@
-import logging
+"""
+Linear programming model.
+
+@author: Mengqi Zhao (mengqi.zhao@pnnl.gov)
+
+@Project: GLORY v1.0
+
+License:  BSD 2-Clause, see LICENSE and DISCLAIMER files
+
+Copyright (c) 2023, Battelle Memorial Institute
+
+"""
+
+import pandas as pd
 from pyomo.environ import *
 
-def LP_model(K, Smin, Ig, Eg, f, p, z, m):
+
+def lp_model(K, Smin, Ig, Eg, f, p, z, m, solver='glpk'):
     """
     Construct Capacity-Yield Curve with Linear Programming Model.
 
@@ -90,7 +104,43 @@ def LP_model(K, Smin, Ig, Eg, f, p, z, m):
     model.obj = Objective(expr=model.Y, sense=maximize)
 
     # Solve the problem
-    opt = SolverFactory('glpk')
+    opt = SolverFactory(solver)
     opt.solve(model, tee=False)
 
-    return model.obj()
+    return model
+
+def lp_solution(model, K, basin_id, period):
+    """
+
+    :param model:               pyomo model object
+    :param K:                   float for storage capacity
+    :param basin_id:            int for basin id
+    :param period:              int for model period
+    :return:                    data frame for all the water balance variables
+    """
+
+    # retrieve values of optimal model variables
+    I = [value(model.I[key]) for key in model.I]
+    E = [value(model.E[key]) for key in model.E]
+    R = [value(model.R[key]) for key in model.R]
+    EF = [value(model.EF[key]) for key in model.EF]
+    RF = [value(model.RF[key]) for key in model.RF]
+    X = [value(model.X[key]) for key in model.X]
+    S = [value(model.S[key]) for key in model.S]
+
+    # create data frame
+    df = pd.DataFrame(
+        {'basin_id': basin_id,
+         'period': period,
+         'month': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+         'storage_capacity': K,
+         'inflow': I,
+         'evaporation': E,
+         'release': R,
+         'environmental_flow': EF,
+         'return_flow': RF,
+         'spill': X,
+         'storage': S}
+    )
+
+    return df

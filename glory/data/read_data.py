@@ -1,3 +1,16 @@
+"""
+Module to load input data files.
+
+@author: Mengqi Zhao (mengqi.zhao@pnnl.gov)
+
+@Project: GLORY v1.0
+
+License:  BSD 2-Clause, see LICENSE and DISCLAIMER files
+
+Copyright (c) 2023, Battelle Memorial Institute
+
+"""
+
 import logging
 import os
 import pandas as pd
@@ -10,7 +23,7 @@ class DataLoader:
 
     global capacity_gcam_pre
 
-    def __init__(self, config, period, base_period=2020, demand_gcam=None, capacity_gcam=None):
+    def __init__(self, config, basin_id, period, base_period=2020, demand_gcam=None, capacity_gcam=None):
         """
         Initialization
 
@@ -21,9 +34,9 @@ class DataLoader:
         :param capacity_gcam:       dataframe for storage capacity based on GCAM solved runoff demand
         """
 
-        logging.info('Starting function DataLoader...')
+        logging.info(f'Starting function read_data for basin {basin_id}.')
 
-        self.basin_id = config.scales['basin_id']
+        self.basin_id = basin_id
         self.period = period
         self.base_period = base_period
         self.demand_gcam = demand_gcam
@@ -59,6 +72,8 @@ class DataLoader:
         # define constant
         self.storage_min = 0
         self.m = 0.1
+
+        logging.info('Function read_data completed successfully.')
 
     def load_data(self, fn, header_num=0):
         """

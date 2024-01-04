@@ -2,7 +2,7 @@ Modules Reference
 =================
 
 glory.model
--------------------
+-----------
 
 .. automodule:: glory.model
    :members:
@@ -10,7 +10,7 @@ glory.model
    :show-inheritance:
 
 glory.method.lp
--------------------
+---------------
 
 .. automodule:: glory.method.lp
    :members:
@@ -18,7 +18,7 @@ glory.method.lp
    :show-inheritance:
 
 glory.method.supply_curve
--------------------
+-------------------------
 
 .. automodule:: glory.method.supply_curve
    :members:
@@ -26,7 +26,7 @@ glory.method.supply_curve
    :show-inheritance:
 
 glory.data.read_config
--------------------
+----------------------
 
 .. automodule:: glory.data.read_config
    :members:
@@ -34,7 +34,7 @@ glory.data.read_config
    :show-inheritance:
 
 glory.data.read_data
--------------------
+--------------------
 
 .. automodule:: glory.data.read_data
    :members:
@@ -42,7 +42,7 @@ glory.data.read_data
    :show-inheritance:
 
 glory.data.write_outputs
--------------------
+------------------------
 
 .. automodule:: glory.data.write_outputs
    :members:
@@ -50,7 +50,7 @@ glory.data.write_outputs
    :show-inheritance:
 
 glory.utils.diagnostics
--------------------
+-----------------------
 
 .. automodule:: glory.utils.diagnostics
    :members:

@@ -1,3 +1,16 @@
+"""
+Module to create diagnostic figures.
+
+@author: Mengqi Zhao (mengqi.zhao@pnnl.gov)
+
+@Project: GLORY v1.0
+
+License:  BSD 2-Clause, see LICENSE and DISCLAIMER files
+
+Copyright (c) 2023, Battelle Memorial Institute
+
+"""
+
 import logging
 import os
 import matplotlib.pyplot as plt
@@ -44,8 +57,9 @@ def diagnostics(config, outputs, fig_path=None):
 
         fig_path_period = os.path.join(fig_path, str(outputs.period))
 
+        # save figure
         if not os.path.exists(fig_path_period):
             os.makedirs(fig_path_period, exist_ok=True)
         fig.savefig(os.path.join(fig_path_period, str(outputs.basin_id) + ' - ' + basin_name + '.png'))
 
-        logging.info('Function method completed.')
+        logging.info('Function diagnostics completed successfully.')
