@@ -1,7 +1,7 @@
 [![build](https://github.com/JGCRI/glory/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/JGCRI/glory/actions/workflows/build.yml)
 [![docs](https://github.com/JGCRI/glory/actions/workflows/docs.yml/badge.svg?branch=main)](https://github.com/JGCRI/glory/actions/workflows/docs.yml)
 [![tests](https://github.com/JGCRI/glory/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/JGCRI/glory/actions/workflows/test.yml)
-[![codecov](https://codecov.io/gh/JGCRI/glory/branch/main/graph/badge.svg?token=2EWDAQI07B)](https://codecov.io/gh/JGCRI/glory)
+[![codecov](https://codecov.io/gh/jgcri/glory/graph/badge.svg?token=TTH482Y1UD)](https://codecov.io/gh/jgcri/glory)
 
 # Introduction
 
