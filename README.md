@@ -5,7 +5,7 @@
 
 # Introduction
 
-The `GLORY` (GLObal Reservoir Yield) model is an open-source Python package designed to optimize water yield for a given reservoir storage capacity while also estimating the economic value of water supply for global river basins. The `GLORY` model streamlines workflows by integrating information on climate, hydrology, water demand, reservoir exploitable potential, and physiography to estimate the water availability and prices of water supply from reservoirs. ``GLORY`` identify the sub-annual regulation capability and associated investment of reservoirs and establish boundary conditions for basin-level analysis on reservoir management.
+The `GLORY` (GLObal Reservoir Yield) model is an open-source Python package designed to optimize water yield for a given reservoir storage capacity while also estimating the economic value of reservoir water supply for global river basins. The `GLORY` model streamlines workflows by integrating information on climate, hydrology, water demand, reservoir exploitable potential, and physiography to estimate the water availability and prices of water supply from reservoirs. ``GLORY`` identifies the sub-annual regulation capability and associated investment of reservoirs and establishes boundary conditions for basin-level analysis on reservoir management.
 
 <br>
 

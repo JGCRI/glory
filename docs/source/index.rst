@@ -11,7 +11,7 @@ The key functions of ``GLORY`` are as follows:
 
 2) Calculate the cost of constructing reservoirs and the prices of water at different reservoir expansion stages across global basins.
 
-The ``GLORY`` model streamlines workflows by integrating information on climate, hydrology, water demand, reservoir exploitable potential, and physiography to estimate the water availability and prices of water supply from reservoirs. ``GLORY`` identify the sub-annual regulation capability and associated investment of reservoirs and establish boundary conditions for basin-level analysis on reservoir management.
+The ``GLORY`` model streamlines workflows by integrating information on climate, hydrology, water demand, reservoir exploitable potential, and physiography to estimate the water availability and prices of water supply from reservoirs. ``GLORY`` identifies the sub-annual regulation capability and associated investment of reservoirs and establishes boundary conditions for basin-level analysis on reservoir management.
 
 
 .. grid:: 1 2 2 2
