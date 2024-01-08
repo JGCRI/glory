@@ -17,7 +17,7 @@ sys.path.insert(0, os.path.abspath('../../'))
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'GLORY'
-copyright = '2021, Battelle Memorial Institute'
+copyright = '2022, Battelle Memorial Institute'
 author = 'Mengqi Zhao'
 release = '1.0.0'
 
@@ -59,6 +59,15 @@ source_suffix = [".rst"]
 #
 html_theme = 'sphinx_rtd_theme'
 
+# replace "view page source" with "edit on github" in Read The Docs theme
+#  * https://github.com/readthedocs/sphinx_rtd_theme/issues/529
+html_context = {
+    'display_github': True,
+    'github_user': 'jgcri',
+    'github_repo': 'glory',
+    'github_version': 'main/docs/source/',
+}
+
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
@@ -70,6 +79,11 @@ html_static_path = ['_static']
 #     "css/glory.css",
 #     "css/getting_started.css",
 # ]
+
+# If true, links to the reST sources are added to the pages.
+#
+html_show_sourcelink = False
+
 
 import glory
 version = str(glory.__version__)

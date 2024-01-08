@@ -43,11 +43,13 @@ class ConfigReader:
                 self.root = glory.default_download_dir
         else:
             if not os.path.exists(self.root):
-                logging.warning(f'The root directory provided: {self.root} is not a valid directory. '
-                                f'Modify the root directory to the default download directory: {glory.default_download_dir}.')
-                self.root = glory.default_download_dir
-
-
+                if os.path.exists(glory.default_download_dir):
+                    logging.warning(f'The root directory provided: {self.root} is not a valid directory. '
+                                    f'Modified the root directory to the default download directory: {glory.default_download_dir}.')
+                    self.root = glory.default_download_dir
+                else:
+                    raise FileExistsError(f'The root directory provided: {self.root} is not a valid directory. '
+                                          f'Please provide valid root directory.')
 
         # input files
         if self.input_files is not None:

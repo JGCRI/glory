@@ -1,11 +1,11 @@
-[![build](https://github.com/JGCRI/glory/actions/workflows/build.yml/badge.svg)](https://github.com/JGCRI/glory/actions/workflows/build.yml)
-[![docs](https://github.com/JGCRI/glory/actions/workflows/docs.yml/badge.svg)](https://github.com/JGCRI/glory/actions/workflows/docs.yml)
-[![tests](https://github.com/JGCRI/glory/actions/workflows/test.yml/badge.svg)](https://github.com/JGCRI/glory/actions/workflows/test.yml)
-[![codecov](https://codecov.io/gh/JGCRI/glory/branch/main/graph/badge.svg?token=2EWDAQI07B)](https://codecov.io/gh/JGCRI/glory)
+[![build](https://github.com/JGCRI/glory/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/JGCRI/glory/actions/workflows/build.yml)
+[![docs](https://github.com/JGCRI/glory/actions/workflows/docs.yml/badge.svg?branch=main)](https://github.com/JGCRI/glory/actions/workflows/docs.yml)
+[![tests](https://github.com/JGCRI/glory/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/JGCRI/glory/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/jgcri/glory/graph/badge.svg?token=TTH482Y1UD)](https://codecov.io/gh/jgcri/glory)
 
 # Introduction
 
-The `GLORY` (GLObal Reservoir Yield) model is an open-source Python package designed to optimize water yield for a given reservoir storage capacity while also estimating the economic value of water supply for global river basins. The `GLORY` model streamlines workflows by integrating information on climate, hydrology, water demand, reservoir exploitable potential, and physiography to estimate the water availability and prices of water supply from reservoirs. ``GLORY`` identify the sub-annual regulation capability and associated investment of reservoirs and establish boundary conditions for basin-level analysis on reservoir management.
+The `GLORY` (GLObal Reservoir Yield) model is an open-source Python package designed to optimize water yield for a given reservoir storage capacity while also estimating the economic value of reservoir water supply for global river basins. The `GLORY` model streamlines workflows by integrating information on climate, hydrology, water demand, reservoir exploitable potential, and physiography to estimate the water availability and prices of water supply from reservoirs. ``GLORY`` identifies the sub-annual regulation capability and associated investment of reservoirs and establishes boundary conditions for basin-level analysis on reservoir management.
 
 <br>
 

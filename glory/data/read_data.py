@@ -51,14 +51,14 @@ class DataLoader:
                                                       f_basin_region=config.reference_files['basin_to_region_mapping'],
                                                       header_num=7)
 
-        self.inflow = self.climate.loc[self.climate['period'] == self.period, 'smooth_runoff_km3'].iloc[0]
-        self.evap_depth = self.climate.loc[self.climate['period'] == self.period, 'pet_km'].iloc[0]
+        self.inflow = self.climate.loc[self.climate['period'] == self.period, 'runoff_km3'].iloc[0]
+        self.evap_depth = self.climate.loc[self.climate['period'] == self.period, 'evaporation_km'].iloc[0]
         self.res_area = self.reservoir['nonhydro_area_km2'].iloc[0]
 
         self.inflow_profile = dict(zip(self.profile.loc[self.profile['period'] == self.period, 'month'],
                                        self.profile.loc[self.profile['period'] == self.period, 'inflow']))
         self.evap_profile = dict(zip(self.profile.loc[self.profile['period'] == self.period, 'month'],
-                                     self.profile.loc[self.profile['period'] == self.period, 'pet']))
+                                     self.profile.loc[self.profile['period'] == self.period, 'evaporation']))
         self.demand_profile = self.get_demand_profile()
 
         # capacity values
@@ -132,7 +132,7 @@ class DataLoader:
             grp = df.groupby(['basin_id', 'gcam_basin_name', 'sector', 'year'], as_index=False).sum()
 
             # rename column 'value'
-            grp = grp.rename(columns={'value': 'demand_ann'})
+            grp = grp.rename(columns={'value': 'demand_km3'})
 
         else:
             grp = None
@@ -181,35 +181,35 @@ class DataLoader:
 
         if self.period <= self.base_period:
             # get historical demand
-            demand_ann = self.demand_hist[['sector', 'demand_ann']]
+            df_demand = self.demand_hist[['sector', 'demand_km3']]
 
         elif self.period > self.base_period:
             if self.load_gcam_demand() is None:
-                demand_ann = self.demand_hist[['sector', 'demand_ann']]
+                df_demand = self.demand_hist[['sector', 'demand_km3']]
             else:
-                if self.load_gcam_demand()['demand_ann'].sum() == 0:
+                if self.load_gcam_demand()['demand_km3'].sum() == 0:
                     print('Basin: ', self.basin_id, ' has a sum of 0 demand from all sectors. Replace demand profile with historical profile.')
-                    demand_ann = self.demand_hist[['sector', 'demand_ann']]
+                    df_demand = self.demand_hist[['sector', 'demand_km3']]
                 else:
                     # reformat gcam withdrawal
-                    demand_ann = self.load_gcam_demand()[['sector', 'demand_ann']]
+                    df_demand = self.load_gcam_demand()[['sector', 'demand_km3']]
 
         # only keep sectoral demand profiles and melt
         df = self.profile.loc[self.profile['period'] == self.period].copy()
-        df = df.drop(['basin_id', 'basin_name', 'period', 'pet', 'inflow'], axis=1). \
+        df = df.drop(['basin_id', 'basin_name', 'period', 'evaporation', 'inflow'], axis=1). \
             melt(id_vars=['month']).rename(columns={'variable': 'sector'})
 
         # merge annual demand and sectoral demand profiles
-        df = pd.merge(df, demand_ann, how='left', on=['sector'])
+        df = pd.merge(df, df_demand, how='left', on=['sector'])
 
         # calculate demand amount for each demand sector
-        df['demand'] = df['value'] * df['demand_ann']
+        df['demand_sector'] = df['value'] * df['demand_km3']
 
         # calculate total monthly demand by aggregating all demand sectors
         df = df.groupby('month', as_index=False).sum()
 
         # calculate profile
-        df['profile'] = df['demand'] / df['demand_ann']
+        df['profile'] = df['demand_sector'] / df['demand_km3']
 
         # construct dictionary for month and demand profile
         dict_out = dict(zip(df['month'], df['profile']))
@@ -256,6 +256,6 @@ class DataLoader:
 
         # adjust max storage cap to mean annual runoff both max and current capacities are 0
         if val == 0:
-            val = 0.01 * self.climate.loc[self.climate['period'] == self.period, 'smooth_runoff_km3'].iloc[0]
+            val = 0.01 * self.climate.loc[self.climate['period'] == self.period, 'runoff_km3'].iloc[0]
 
         return val
