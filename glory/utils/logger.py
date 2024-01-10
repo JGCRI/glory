@@ -5,7 +5,7 @@ Module to initiate project-wide logger.
 
 @Project: GLORY v1.0
 
-License:  BSD 2-Clause, see LICENSE and DISCLAIMER files
+License:  BSD 3-Clause, see LICENSE and DISCLAIMER files
 
 Copyright (c) 2023, Battelle Memorial Institute
 
