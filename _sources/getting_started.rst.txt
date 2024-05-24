@@ -66,11 +66,14 @@ Example data and configuration file can be downloaded from Zenodo through this `
     # The example data will be downloaded to the cloned package folder by default.
     glory.get_example_data()
 
-    # Or
+Or, if the user didn't clone the ``GLORY`` package, then specify a desired download location.
 
-    # If the user didn't clone the package, then specify a desired download location.
+.. code-block:: python
+
+    import glory
+
+    # modify example_data_directory to your own desired location
     glory.get_example_data(example_data_directory='path/to/desired/location')
-
 
 Run
 -----------------------------------
@@ -87,3 +90,5 @@ With the example data downloaded, a simple configuration can be run:
 
     glory.run_model(config_file=config_file)
 
+
+Check your ``example\outputs`` folder for the results!

@@ -236,10 +236,11 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Mapping different formats of basin names.</span>
 
-<span class="sd">        :param fn:              string for full file path</span>
-<span class="sd">        :param header_num:      integer for numbers of rows to skip until the header</span>
+<span class="sd">        :param f_basin_country:     string for full file path to basin-country mapping file</span>
+<span class="sd">        :param f_basin_region:      string for full file path to basin-region mapping file</span>
+<span class="sd">        :param header_num:          integer for numbers of rows to skip until the header</span>
 
-<span class="sd">        :return:                dataframe</span>
+<span class="sd">        :return:                    dataframe</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># load basin mapping data</span>
@@ -268,8 +269,6 @@
     <span class="k">def</span> <span class="nf">get_demand_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate total demand profile with historical sectoral profile and sectoral demand.</span>
-
-<span class="sd">        :param data_type:           string for input demand data. &#39;hist&#39; or &#39;gcam&#39;</span>
 
 <span class="sd">        :return:                    dictionary</span>
 <span class="sd">        &quot;&quot;&quot;</span>
