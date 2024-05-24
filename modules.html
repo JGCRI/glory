@@ -462,11 +462,8 @@ Y0+0.05(Ig-Y0) if Y0 != 0, dx is reduced to 1/2 until dx satisfies the condition
 <span class="sig-name descname"><span class="pre">get_demand_profile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/glory/data/read_data.html#DataLoader.get_demand_profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#glory.data.read_data.DataLoader.get_demand_profile" title="Link to this definition"></a></dt>
 <dd><p>Calculate total demand profile with historical sectoral profile and sectoral demand.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data_type</strong> – string for input demand data. ‘hist’ or ‘gcam’</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>dictionary</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dictionary</p>
 </dd>
 </dl>
 </dd></dl>
@@ -490,7 +487,8 @@ Max storage capacity input data for some basins is already adjusted based on the
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>fn</strong> – string for full file path</p></li>
+<li><p><strong>f_basin_country</strong> – string for full file path to basin-country mapping file</p></li>
+<li><p><strong>f_basin_region</strong> – string for full file path to basin-region mapping file</p></li>
 <li><p><strong>header_num</strong> – integer for numbers of rows to skip until the header</p></li>
 </ul>
 </dd>
