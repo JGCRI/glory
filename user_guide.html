@@ -54,25 +54,12 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">User Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#workflow-overview">Workflow Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#global-river-basins">Global River Basins</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#reservoir-storage-capacity-and-water-yield-relationships">Reservoir Storage Capacity and Water Yield Relationships</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#configuration-file">Configuration File</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#input-files">input_files</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#climate">climate</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#sectoral-demand">sectoral_demand</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#monthly-profile">monthly_profile</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#slope">slope</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#reservoir">reservoir</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#reference-files">reference_files</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#basin-to-country-mapping">basin_to_country_mapping</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#basin-to-region-mapping">basin_to_region_mapping</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#scales">scales</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#parameters">parameters</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#lp">lp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#outputs">outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#input-data">Input Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#climate-data">Climate Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#water-demand-data">Water Demand Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#profile-data">Profile Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#basin-slope">Basin Slope</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reservoir-data">Reservoir Data</a></li>
 </ul>
 </li>
 </ul>
@@ -113,11 +100,8 @@
 <section id="workflow-overview">
 <h2>Workflow Overview<a class="headerlink" href="#workflow-overview" title="Link to this heading"></a></h2>
 <p>The core workflow of <code class="docutils literal notranslate"><span class="pre">GLORY</span></code> consists of 2 stages: linear programming and supply curve construction.</p>
-<figure class="align-center" id="id1">
+<figure class="align-center">
 <a class="reference internal image-reference" href="_images/workflow.png"><img alt="workflow" src="_images/workflow.png" style="width: 90%;" /></a>
-<figcaption>
-<p><span class="caption-text">Figure 1. GLORY framework for required input data and model structure.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
-</figcaption>
 </figure>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -125,7 +109,7 @@
 </section>
 <section id="global-river-basins">
 <h2>Global River Basins<a class="headerlink" href="#global-river-basins" title="Link to this heading"></a></h2>
-<p>The default <code class="docutils literal notranslate"><span class="pre">GLORY</span></code> model is operating for each of the 235 global river basins shown in Figure 2 below. Details on basin names and the corresponding basin ID can be found using <code class="docutils literal notranslate"><span class="pre">GLORY</span></code> functions.</p>
+<p>The default <code class="docutils literal notranslate"><span class="pre">GLORY</span></code> model is operating for each of the 235 global river basins shown in the figure. Details on basin names and the corresponding basin ID can be found using <code class="docutils literal notranslate"><span class="pre">GLORY</span></code> functions.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glory</span>
 
 <span class="n">config</span> <span class="o">=</span> <span class="n">glory</span><span class="o">.</span><span class="n">ConfigReader</span><span class="p">(</span><span class="n">config_file</span><span class="o">=</span><span class="s1">&#39;path/to/config/file&#39;</span><span class="p">)</span>
@@ -135,81 +119,23 @@
                         <span class="n">basin_id</span><span class="o">=</span><span class="mi">83</span><span class="p">,</span>
                         <span class="n">period</span><span class="o">=</span><span class="mi">2025</span><span class="p">)</span>
 
-<span class="c1"># check the basin ID and basin names for global 235 basins</span>
+<span class="c1"># check the global basins</span>
 <span class="n">data</span><span class="o">.</span><span class="n">basin_name_std</span>
 </pre></div>
 </div>
-<figure class="align-center" id="id2">
+<figure class="align-center">
 <a class="reference internal image-reference" href="_images/gcam_basin_robinson_projection.png"><img alt="basins" src="_images/gcam_basin_robinson_projection.png" style="width: 90%;" /></a>
-<figcaption>
-<p><span class="caption-text">Figure 2. Global 235 HUC2 basins identified by GLORY.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
-</figcaption>
 </figure>
 </section>
-<section id="reservoir-storage-capacity-and-water-yield-relationships">
-<h2>Reservoir Storage Capacity and Water Yield Relationships<a class="headerlink" href="#reservoir-storage-capacity-and-water-yield-relationships" title="Link to this heading"></a></h2>
-<p>Reservoir annual water yield is defined as the annual volumetric quantity of water that can be released from a reservoir for downstream uses within a year. Water yield can be estimated based on a given volume of reservoir storage capacity. By estimating yields at different storage capacity level, we can obtain the capacity-yield curve. With changing patterns of intra-annual climate and demand, a reservoir with the same storage capacity can yield different amount of water annually. <cite>GLORY</cite> is developed to capture such variations. Figure 3 shows an example of capacity-yield curve.</p>
-<figure class="align-center" id="id3">
-<a class="reference internal image-reference" href="_images/example_capacity_yield.png"><img alt="capacity_yield" src="_images/example_capacity_yield.png" style="width: 90%;" /></a>
-<figcaption>
-<p><span class="caption-text">Figure 3. Example of a capacity-yield curve.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
-</figcaption>
-</figure>
-</section>
-<section id="configuration-file">
-<h2>Configuration File<a class="headerlink" href="#configuration-file" title="Link to this heading"></a></h2>
-<p>The configuration file uses YAML structure to set up options for running <code class="docutils literal notranslate"><span class="pre">GLORY</span></code>. The options in this file correspond to the arguments passed to the <code class="docutils literal notranslate"><span class="pre">GLORY</span></code> class. Options not present in the configuration file will use the default. An overview is provided in the following table, with more details and examples below.</p>
-<p>More details of the structure of the files or options can be found in each subsection.</p>
-<blockquote>
-<div><table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Option</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>root</p></td>
-<td><p>Root directory for inputs and outputs</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#input-files"><span class="std std-ref">input_files</span></a></p></td>
-<td><p>Relative file path for each input file, including <a class="reference internal" href="#climate"><span class="std std-ref">climate</span></a>, <a class="reference internal" href="#sectoral-demand"><span class="std std-ref">sectoral_demand</span></a>, <a class="reference internal" href="#monthly-profile"><span class="std std-ref">monthly_profile</span></a>, <a class="reference internal" href="#slope"><span class="std std-ref">slope</span></a>, and <a class="reference internal" href="#reservoir"><span class="std std-ref">reservoir</span></a></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reference-files"><span class="std std-ref">reference_files</span></a></p></td>
-<td><p>Relative file path for each reference file</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#scales"><span class="std std-ref">scales</span></a></p></td>
-<td><p>Choice of basin ID, GCAM period, and base year period</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#parameters"><span class="std std-ref">parameters</span></a></p></td>
-<td><p>Initial number of breakout segments on a capacity-yield curve. Default is 100</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lp"><span class="std std-ref">lp</span></a></p></td>
-<td><p>Choice of linear programming model solver. Default is glpk</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#outputs"><span class="std std-ref">outputs</span></a></p></td>
-<td><p>Choice of types of outputs to generate</p></td>
-</tr>
-</tbody>
-</table>
-</div></blockquote>
-<section id="input-files">
-<h3>input_files<a class="headerlink" href="#input-files" title="Link to this heading"></a></h3>
-<p>The input data are pre-processed data for GLORY based on various dataset including hydrology, water demand, GranD, hydroLAKES, land use land cover, population, protected areas, and slope. The followings describes the structure of the input data.</p>
-<p>Below is an example configuration for the input files.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">input_files</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">climate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inputs/climate_canesm5_r1i1p1f1_ssp126_2020_2050.csv</span>
-<span class="w">    </span><span class="nt">sectoral_demand</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inputs/demand_hist.csv</span>
-<span class="w">    </span><span class="nt">monthly_profile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inputs/fraction_profile_canesm5_r1i1p1f1_ssp126_2020_2050.csv</span>
-<span class="w">    </span><span class="nt">slope</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inputs/slope.csv</span>
-<span class="w">    </span><span class="nt">reservoir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inputs/reservoir.csv</span>
-</pre></div>
-</div>
+<section id="input-data">
+<h2>Input Data<a class="headerlink" href="#input-data" title="Link to this heading"></a></h2>
+<p>The input data are pre-processed data for GLORY based on various dataset including hydrology , water demand, GranD, hydroLAKES, land use land cover, population, protected areas, and slope. The followings describes the structure of the input data.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>To update the data, please follow the same data format and structure for each input file.</p>
 </div>
-<section id="climate">
-<h4>climate<a class="headerlink" href="#climate" title="Link to this heading"></a></h4>
+<section id="climate-data">
+<h3>Climate Data<a class="headerlink" href="#climate-data" title="Link to this heading"></a></h3>
 <blockquote>
 <div><table class="docutils align-default">
 <thead>
@@ -243,8 +169,8 @@
 </table>
 </div></blockquote>
 </section>
-<section id="sectoral-demand">
-<h4>sectoral_demand<a class="headerlink" href="#sectoral-demand" title="Link to this heading"></a></h4>
+<section id="water-demand-data">
+<h3>Water Demand Data<a class="headerlink" href="#water-demand-data" title="Link to this heading"></a></h3>
 <blockquote>
 <div><table class="docutils align-default">
 <thead>
@@ -259,7 +185,7 @@
 <td><p>-</p></td>
 </tr>
 <tr class="row-odd"><td><p>basin_name</p></td>
-<td><p>Basin name</p></td>
+<td><p>Basin Name</p></td>
 <td><p>-</p></td>
 </tr>
 <tr class="row-even"><td><p>sector</p></td>
@@ -274,8 +200,8 @@
 </table>
 </div></blockquote>
 </section>
-<section id="monthly-profile">
-<h4>monthly_profile<a class="headerlink" href="#monthly-profile" title="Link to this heading"></a></h4>
+<section id="profile-data">
+<h3>Profile Data<a class="headerlink" href="#profile-data" title="Link to this heading"></a></h3>
 <blockquote>
 <div><table class="docutils align-default">
 <thead>
@@ -337,8 +263,8 @@
 </table>
 </div></blockquote>
 </section>
-<section id="slope">
-<h4>slope<a class="headerlink" href="#slope" title="Link to this heading"></a></h4>
+<section id="basin-slope">
+<h3>Basin Slope<a class="headerlink" href="#basin-slope" title="Link to this heading"></a></h3>
 <blockquote>
 <div><table class="docutils align-default">
 <thead>
@@ -364,8 +290,8 @@
 </table>
 </div></blockquote>
 </section>
-<section id="reservoir">
-<h4>reservoir<a class="headerlink" href="#reservoir" title="Link to this heading"></a></h4>
+<section id="reservoir-data">
+<h3>Reservoir Data<a class="headerlink" href="#reservoir-data" title="Link to this heading"></a></h3>
 <blockquote>
 <div><table class="docutils align-default">
 <thead>
@@ -410,102 +336,6 @@
 </tbody>
 </table>
 </div></blockquote>
-</section>
-</section>
-<section id="reference-files">
-<h3>reference_files<a class="headerlink" href="#reference-files" title="Link to this heading"></a></h3>
-<p>Reference files are for mapping basin to different spatial scales. The reference files includes basin to country mapping and basin to region mapping. Below is an example configuration for the reference files.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">reference_files</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">basin_to_country_mapping</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inputs/basin_to_country_mapping.csv</span>
-<span class="w">    </span><span class="nt">basin_to_region_mapping</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inputs/basin_to_region_mapping.csv</span>
-</pre></div>
-</div>
-<section id="basin-to-country-mapping">
-<h4>basin_to_country_mapping<a class="headerlink" href="#basin-to-country-mapping" title="Link to this heading"></a></h4>
-<p>This is a default mapping file from <code class="docutils literal notranslate"><span class="pre">gcamdata</span></code> system.</p>
-<blockquote>
-<div><table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Variable Name</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>GCAM_basin_ID</p></td>
-<td><p>Basin ID from 1 to 235</p></td>
-</tr>
-<tr class="row-odd"><td><p>Basin_long_name</p></td>
-<td><p>Basin name with underscores. For example, Arctic_Ocean_Islands</p></td>
-</tr>
-<tr class="row-even"><td><p>GLU_name</p></td>
-<td><p>Basin name in GCAM’s Geographic Land Unit (GLU) format. For example, Arctic_Ocean_Islands’s GLU name is ArcticIsl</p></td>
-</tr>
-</tbody>
-</table>
-</div></blockquote>
-</section>
-<section id="basin-to-region-mapping">
-<h4>basin_to_region_mapping<a class="headerlink" href="#basin-to-region-mapping" title="Link to this heading"></a></h4>
-<blockquote>
-<div><table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Variable Name</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>region</p></td>
-<td><p>Region name</p></td>
-</tr>
-<tr class="row-odd"><td><p>gcam_basin_name</p></td>
-<td><p>GCAM basin name in Geographic Land Unit (GLU) format</p></td>
-</tr>
-</tbody>
-</table>
-</div></blockquote>
-</section>
-</section>
-<section id="scales">
-<h3>scales<a class="headerlink" href="#scales" title="Link to this heading"></a></h3>
-<p>Under the “scales” section, you can select the basins and time steps to include in the model. Below is an example configuration for the scales.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">scales</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">basin_id</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">167</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">168</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1"># use &#39;all&#39; to select all basins. Use comma separated list to select multiple basins</span>
-<span class="w">    </span><span class="nt">gcam_period</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">2025</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1"># 5-year interval periods that &gt;= base period. Use comma separated list to select multiple time steps</span>
-<span class="w">    </span><span class="nt">base_period</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2020</span><span class="w"> </span><span class="c1"># first future period. In current GCAM, 2020 is the default fist future period</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Running all 235 basins will take a while. We recommend to start with one or two basins for testing.</p>
-</div>
-</section>
-<section id="parameters">
-<h3>parameters<a class="headerlink" href="#parameters" title="Link to this heading"></a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">init_segments</span></code> parameter determines the initial number of segments on a capacity-yield curve, impacting how many points the LP model needs to solve on the capacity-year curve. Increasing the number of segments can enhance the curve’s resolution and accuracy, while a lower number of segments may reduce precision. The default value is 100. Below is an example configuration for the parameters.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">parameters</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">init_segments</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
-</pre></div>
-</div>
-</section>
-<section id="lp">
-<h3>lp<a class="headerlink" href="#lp" title="Link to this heading"></a></h3>
-<p>The linear programming model solver used in the <code class="docutils literal notranslate"><span class="pre">GLORY</span></code> model. The default and recommended solver is <code class="docutils literal notranslate"><span class="pre">glpk</span></code>. Other solvers might be available.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">lp</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">solver</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;glpk&#39;</span>
-</pre></div>
-</div>
-</section>
-<section id="outputs">
-<h3>outputs<a class="headerlink" href="#outputs" title="Link to this heading"></a></h3>
-<p>Configure the output directory and specify the data to be generated. Set to True to enable the output for each data item. Below is an example configuration for the outputs setup.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">outputs</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">output_folder</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">outputs</span><span class="w"> </span><span class="c1"># relative path to the outputs folder</span>
-<span class="w">    </span><span class="nt">capacity_yield</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"> </span><span class="c1"># capacity-yield curve at the basin level</span>
-<span class="w">    </span><span class="nt">supply_curve</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"> </span><span class="c1"># supply curve at the basin level</span>
-<span class="w">    </span><span class="nt">lp_solution</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"> </span><span class="c1"># the water balance solution at each storage capacity point</span>
-<span class="w">    </span><span class="nt">diagnostics</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"> </span><span class="c1"># diagnostic figures</span>
-</pre></div>
-</div>
 </section>
 </section>
 </section>
