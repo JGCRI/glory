@@ -58,6 +58,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#example-data">Example Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#run">Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#use-glory-modules">Use <cite>GLORY</cite> Modules</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="user_guide.html">User Guide</a></li>
@@ -161,6 +162,48 @@
 </pre></div>
 </div>
 <p>Check your <code class="docutils literal notranslate"><span class="pre">example\outputs</span></code> folder for the results!</p>
+</section>
+<section id="use-glory-modules">
+<h2>Use <cite>GLORY</cite> Modules<a class="headerlink" href="#use-glory-modules" title="Link to this heading"></a></h2>
+<p>Instead of running the entire model, one can choose to run certain modules.</p>
+<p>To generate a capacity-yield curve and a supply curve with discrete points for a single basin, users can easily instantiate the <cite>glory.SupplyCurve()</cite> object by providing the configuration object. The <cite>glory.SupplyCurve()</cite> will then undertake the process of identifying reservoir storage capacity expansion pathways and calculating the optimized water yield at each storage capacity point. The example below uses California River basin (basin ID is 217) for time step 2020.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glory</span>
+
+<span class="c1"># indicate the path to the config file</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">glory</span><span class="o">.</span><span class="n">ConfigReader</span><span class="p">(</span><span class="n">config_file</span><span class="o">=</span><span class="n">config_file</span><span class="p">)</span>
+
+<span class="c1"># demand_gcam and capacity_gcam is set to None because the model is not linked with GCAM in this example</span>
+<span class="n">sc</span> <span class="o">=</span> <span class="n">glory</span><span class="o">.</span><span class="n">SupplyCurve</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+                       <span class="n">basin_id</span><span class="o">=</span><span class="mi">217</span><span class="p">,</span>
+                       <span class="n">period</span><span class="o">=</span><span class="mi">2020</span><span class="p">,</span>
+                       <span class="n">demand_gcam</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">capacity_gcam</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+<span class="c1"># Check the capacity-yield curve</span>
+<span class="n">sc</span><span class="o">.</span><span class="n">capacity_yield</span>
+
+<span class="c1"># check the supply curve</span>
+<span class="n">sc</span><span class="o">.</span><span class="n">supply_curve</span>
+</pre></div>
+</div>
+<p>One can effortlessly apply the <cite>glory.lp_model()</cite> function to execute a linear programming model that determines the optimized water yield for a given reservoir storage capacity. Below is an example with arbitrary numbers. Please not that volumetric units should be consistent across variables.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">lp</span> <span class="o">=</span> <span class="n">glory</span><span class="o">.</span><span class="n">lp_model</span><span class="p">(</span><span class="n">K</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="c1"># set storage capacity as 1 km3</span>
+                    <span class="n">Smin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="c1"># minimum storage</span>
+                    <span class="n">Ig</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="c1"># annual inflow in volume</span>
+                    <span class="n">Eg</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="c1"># annual reservoir surface evaporation in volume</span>
+                    <span class="n">f</span><span class="o">=</span><span class="p">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span> <span class="n">num</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">dirichlet</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">])},</span> <span class="c1"># dictionary: monthly profile for demand</span>
+                    <span class="n">p</span><span class="o">=</span><span class="p">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span> <span class="n">num</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">dirichlet</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">])},</span> <span class="c1"># dictionary: monthly profile for inflow</span>
+                    <span class="n">z</span><span class="o">=</span><span class="p">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span> <span class="n">num</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">dirichlet</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">])},</span> <span class="c1"># dictionary: monthly profile for reservoir surface evaporation</span>
+                    <span class="n">m</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="c1"># percentage of water reuse</span>
+                    <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;glpk&#39;</span><span class="p">)</span>
+
+<span class="c1"># view the solution</span>
+<span class="n">lp</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This will return a <a class="reference external" href="https://pyomo.readthedocs.io/en/stable/index.html">pyomo</a> object. To display the linear programming solution for each variable, use <cite>lp.display()</cite>.</p>
 </section>
 </section>
 
