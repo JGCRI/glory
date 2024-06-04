@@ -144,10 +144,11 @@ class DataLoader:
         """
         Mapping different formats of basin names.
 
-        :param fn:              string for full file path
-        :param header_num:      integer for numbers of rows to skip until the header
+        :param f_basin_country:     string for full file path to basin-country mapping file
+        :param f_basin_region:      string for full file path to basin-region mapping file
+        :param header_num:          integer for numbers of rows to skip until the header
 
-        :return:                dataframe
+        :return:                    dataframe
         """
 
         # load basin mapping data
@@ -173,8 +174,6 @@ class DataLoader:
     def get_demand_profile(self):
         """
         Calculate total demand profile with historical sectoral profile and sectoral demand.
-
-        :param data_type:           string for input demand data. 'hist' or 'gcam'
 
         :return:                    dictionary
         """
