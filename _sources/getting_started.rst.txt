@@ -120,7 +120,7 @@ To generate a capacity-yield curve and a supply curve with discrete points for a
     # check the supply curve
     sc.supply_curve
 
-One can effortlessly apply the `glory.lp_model()` function to execute a linear programming model that determines the optimized water yield for a given reservoir storage capacity. Below is an example with arbitrary numbers. Please not that volumetric units should be consistent across variables.
+One can effortlessly apply the `glory.lp_model()` function to execute a linear programming model that determines the optimized water yield for a given reservoir storage capacity. Below is an example with arbitrary numbers. Please note that volumetric units should be consistent across variables.
 
 .. code-block:: python
 
@@ -129,7 +129,7 @@ One can effortlessly apply the `glory.lp_model()` function to execute a linear p
     lp = glory.lp_model(K=1, # set storage capacity as 1 km3
                         Smin=0, # minimum storage
                         Ig=5, # annual inflow in volume
-                        Eg=3, # annual reservoir surface evaporation in volume
+                        Eg=1, # annual reservoir surface evaporation in volume
                         f={i+1: num for i, num in enumerate(np.random.dirichlet(np.ones(12), size=1)[0])}, # dictionary: monthly profile for demand
                         p={i+1: num for i, num in enumerate(np.random.dirichlet(np.ones(12), size=1)[0])}, # dictionary: monthly profile for inflow
                         z={i+1: num for i, num in enumerate(np.random.dirichlet(np.ones(12), size=1)[0])}, # dictionary: monthly profile for reservoir surface evaporation
@@ -139,4 +139,4 @@ One can effortlessly apply the `glory.lp_model()` function to execute a linear p
     # view the solution
     lp.display()
 
-This will return a `pyomo <https://pyomo.readthedocs.io/en/stable/index.html>`_ object. To display the linear programming solution for each variable, use `lp.display()`.
+This will return a `pyomo <https://pyomo.readthedocs.io/en/stable/index.html>`_ object. To display the solution of the linear programming model for each variable, use `lp.display()`.
