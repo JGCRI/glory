@@ -26,7 +26,7 @@ def lp_model(K, Smin, Ig, Eg, f, p, z, m, solver='glpk'):
     :param f:       dictionary for demand fraction profile
     :param p:       dictionary for inflow fraction profile
     :param z:       dictionary for evaporation fraction profile
-    :param m:       float for fraction of flow released from distributed reservoirs
+    :param m:       float for fraction of flow released from distributed reservoirs that’s reusable in the river system
 
     :return:        array for capacity - yield curve
     """
