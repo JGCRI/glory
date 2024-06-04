@@ -76,7 +76,7 @@ Or, if the user didn't clone the ``GLORY`` package, then specify a desired downl
     glory.get_example_data(example_data_directory='path/to/desired/location')
 
 Run
------------------------------------
+---
 
 With the example data downloaded, a simple configuration can be run:
 
@@ -92,3 +92,51 @@ With the example data downloaded, a simple configuration can be run:
 
 
 Check your ``example\outputs`` folder for the results!
+
+Use `GLORY` Modules
+-------------------
+
+Instead of running the entire model, one can choose to run certain modules.
+
+To generate a capacity-yield curve and a supply curve with discrete points for a single basin, users can easily instantiate the `glory.SupplyCurve()` object by providing the configuration object. The `glory.SupplyCurve()` will then undertake the process of identifying reservoir storage capacity expansion pathways and calculating the optimized water yield at each storage capacity point. The example below uses California River basin (basin ID is 217) for time step 2020.
+
+.. code-block:: python
+
+    import glory
+
+    # indicate the path to the config file
+    config = glory.ConfigReader(config_file=config_file)
+
+    # demand_gcam and capacity_gcam is set to None because the model is not linked with GCAM in this example
+    sc = glory.SupplyCurve(config=config,
+                           basin_id=217,
+                           period=2020,
+                           demand_gcam=None,
+                           capacity_gcam=None)
+
+    # Check the capacity-yield curve
+    sc.capacity_yield
+
+    # check the supply curve
+    sc.supply_curve
+
+One can effortlessly apply the `glory.lp_model()` function to execute a linear programming model that determines the optimized water yield for a given reservoir storage capacity. Below is an example with arbitrary numbers. Please not that volumetric units should be consistent across variables.
+
+.. code-block:: python
+
+    import numpy as np
+
+    lp = glory.lp_model(K=1, # set storage capacity as 1 km3
+                        Smin=0, # minimum storage
+                        Ig=5, # annual inflow in volume
+                        Eg=3, # annual reservoir surface evaporation in volume
+                        f={i+1: num for i, num in enumerate(np.random.dirichlet(np.ones(12), size=1)[0])}, # dictionary: monthly profile for demand
+                        p={i+1: num for i, num in enumerate(np.random.dirichlet(np.ones(12), size=1)[0])}, # dictionary: monthly profile for inflow
+                        z={i+1: num for i, num in enumerate(np.random.dirichlet(np.ones(12), size=1)[0])}, # dictionary: monthly profile for reservoir surface evaporation
+                        m=0.1, # percentage of water reuse
+                        solver='glpk')
+
+    # view the solution
+    lp.display()
+
+This will return a `pyomo <https://pyomo.readthedocs.io/en/stable/index.html>`_ object. To display the linear programming solution for each variable, use `lp.display()`.
