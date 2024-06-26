@@ -1,4 +1,4 @@
-cff-version: "0.1.0"
+cff-version: 1.2.0
 message: If you use this software, please cite as the following:
 authors:
 - family-names: "Zhao"
@@ -11,3 +11,23 @@ authors:
   given-names: "Chris R."
   orcid: "https://orcid.org/0000-0002-3406-6214"
 title: "GLORY: a python package for global reservoir water yield and cost estimation"
+version: 0.1.0
+url: "https://github.com/JGCRI/glory"
+preferred-citation:
+    type: article
+    authors:
+    - family-names: "Zhao"
+      given-names: "Mengqi"
+      orcid: "https://orcid.org/0000-0001-5385-2758"
+    - family-names: "Wild"
+      given-names: "Thomas B."
+      orcid: "https://orcid.org/0000-0002-6045-7729"
+    - family-names: "Vernon"
+      given-names: "Chris R."
+      orcid: "https://orcid.org/0000-0002-3406-6214"
+    doi: "10.xxxxx/joss.xxxxx"
+    journal: "Journal of Open Source Software"
+    title: "GLORY: a python package for global reservoir water yield and cost estimation"
+    issue: x
+    volume: y
+    year: 2024
