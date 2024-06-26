@@ -86,7 +86,7 @@ With the example data downloaded, a simple configuration can be run:
     import os
 
     # modify the path if downloaded to a different directory
-    config_file = os.path.join(glory.default_download_dir, 'example', 'example_config.yml')
+    config_file = os.path.join(glory.default_download_dir, 'example_config.yml')
 
     glory.run_model(config_file=config_file)
 
