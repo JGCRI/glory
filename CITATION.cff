@@ -1,0 +1,13 @@
+cff-version: "0.1.0"
+authors:
+- family-names: Zhao
+  given-names: Mengqi
+  orcid: "0000-0001-5385-2758"
+- family-names: Wild
+  given-names: Thomas B.
+  orcid: "0000-0002-6045-7729"
+- family-names: Vernon
+  given-names: Chris R.
+  orcid: "0000-0002-3406-6214"
+message: If you use this software, please cite as the following:
+title: "GLORY: a python package for global reservoir water yield and cost estimation"
