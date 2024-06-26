@@ -10,8 +10,8 @@ authors:
 - family-names: "Vernon"
   given-names: "Chris R."
   orcid: "https://orcid.org/0000-0002-3406-6214"
-title: "GLORY: a python package for global reservoir water yield and cost estimation"
-version: 0.1.0
+title: "GLORY: a Python package for global reservoir water yield and cost estimation"
+version: 1.0.0
 url: "https://github.com/JGCRI/glory"
 preferred-citation:
     type: article
@@ -27,7 +27,7 @@ preferred-citation:
       orcid: "https://orcid.org/0000-0002-3406-6214"
     doi: "10.xxxxx/joss.xxxxx"
     journal: "Journal of Open Source Software"
-    title: "GLORY: a python package for global reservoir water yield and cost estimation"
+    title: "GLORY: a Python package for global reservoir water yield and cost estimation"
     issue: x
     volume: y
     year: 2024
