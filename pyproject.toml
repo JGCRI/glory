@@ -33,17 +33,20 @@ classifiers = [
 ]
 
 [project.optional-dependencies]
-dev = [
-    "twine>=5.1.1",
+test = [
     "pytest>=6.0",
-    "autodoc>=0.5.0",
-    "twine>=4.0.1",
+]
+docs = [
     "ipykernel>=6.15.1",
+    "autodoc>=0.5.0",
     "nbsphinx~=0.8.6",
     "sphinx~=7.2.6",
     "sphinx-design~=0.5.0",
     "sphinx-rtd-theme~=2.0.0",
     "sphinx-mathjax-offline~=0.0.2"
+]
+deploy = [
+    "twine>=4.0.1",
 ]
 
 [project.urls]
