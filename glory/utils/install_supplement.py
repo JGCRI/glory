@@ -32,7 +32,7 @@ class InstallSupplement:
 
     # URL for DOI minted example data hosted on Zenodo
     DATA_VERSION_URLS = {
-        '1.0.0': 'https://zenodo.org/records/10471982/files/example.zip?download=1'
+        '0.1.0': 'https://zenodo.org/records/10471982/files/example.zip?download=1',
     }
 
     def __init__(self, example_data_directory):
@@ -101,3 +101,4 @@ def get_example_data(example_data_directory=None):
         zen = InstallSupplement(example_data_directory)
 
         zen.fetch_zenodo()
+
