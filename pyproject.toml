@@ -18,10 +18,10 @@ urls = { "Homepage" = "https://github.com/JGCRI/glory" }
 requests = ">=2.25.1"
 pandas = ">=1.5"
 numpy = ">=1.23"
-PyYAML = ">=6"
-scipy = "~=1.11.2"
-pyomo = "~=6.6.2"
-matplotlib = "~=3.7.2"
+PyYAML = ">=6.0"
+scipy = ">=1.11.2"
+pyomo = ">=6.6.2"
+matplotlib = ">=3.7.2"
 
 [project.optional-dependencies]
 dev = [
