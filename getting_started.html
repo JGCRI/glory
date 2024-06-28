@@ -99,29 +99,49 @@
 <h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
 <section id="pre-requirements">
 <h3>Pre-requirements<a class="headerlink" href="#pre-requirements" title="Link to this heading"></a></h3>
-<ul class="simple">
+<ul>
 <li><p>Before proceeding, ensure that Python is installed (version 3.9 or above). We recommend using Anaconda to set up a virtual environment.</p></li>
-<li><p>Additionally, you will need to install the linear programming solver <code class="docutils literal notranslate"><span class="pre">glpk</span></code>. The recommended method is to use <code class="docutils literal notranslate"><span class="pre">conda</span></code> to avoid unexpected issues (refer to the <a class="reference external" href="https://jckantor.github.io/ND-Pyomo-Cookbook/notebooks/01.01-Installing-Pyomo.html#glpk">Pyomo documentation</a>). Make sure to use the same Python environment for all packages.</p></li>
+<li><p>Additionally, you will need to install the linear programming solver <code class="docutils literal notranslate"><span class="pre">glpk</span></code>. The recommended method is to use <code class="docutils literal notranslate"><span class="pre">conda</span></code> to avoid unexpected issues (refer to the <a class="reference external" href="https://jckantor.github.io/ND-Pyomo-Cookbook/notebooks/01.01-Installing-Pyomo.html#glpk">Pyomo documentation</a>). Make sure to use the same Python environment for all packages.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">Conda</span></code></p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>glpk
 </pre></div>
 </div>
+<ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">Homebrew</span></code></p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>brew<span class="w"> </span>install<span class="w"> </span>glpk
+
+<span class="c1"># set C linker and include flags so that the pip wheel build can find the headers and library</span>
+<span class="nv">LDFLAGS</span><span class="o">=</span><span class="s2">&quot;-L</span><span class="k">$(</span>brew<span class="w"> </span>--prefix<span class="w"> </span>glpk<span class="k">)</span><span class="s2">/lib&quot;</span><span class="w"> </span><span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-I</span><span class="k">$(</span>brew<span class="w"> </span>--prefix<span class="w"> </span>glpk<span class="k">)</span><span class="s2">/include&quot;</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>glpk
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
 </section>
 <section id="install-glory">
 <h3>Install <code class="docutils literal notranslate"><span class="pre">GLORY</span></code><a class="headerlink" href="#install-glory" title="Link to this heading"></a></h3>
 <p><strong>Option 1:</strong></p>
-<p>You can install <code class="docutils literal notranslate"><span class="pre">GLORY</span></code> from GitHub using <code class="docutils literal notranslate"><span class="pre">pip</span></code> in a command prompt or terminal:</p>
+<p>Install <code class="docutils literal notranslate"><span class="pre">GLORY</span></code> from a command prompt or terminal:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>glory
+</pre></div>
+</div>
+<p><strong>Option 2:</strong></p>
+<p>You can install the development version of <code class="docutils literal notranslate"><span class="pre">GLORY</span></code> from GitHub using <code class="docutils literal notranslate"><span class="pre">pip</span></code> in a command prompt or terminal:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/JGCRI/glory
 </pre></div>
 </div>
 <p>This command will automatically install the dependencies. To avoid package version conflicts, consider using a virtual environment.</p>
-<p><strong>Option 2:</strong></p>
+<p><strong>Option 3:</strong></p>
 <p>Alternatively, users can clone the <code class="docutils literal notranslate"><span class="pre">GLORY</span></code> package from GitHub. Navigate to the desired directory:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/JGCRI/glory
 </pre></div>
 </div>
 <p>Then, navigate into the cloned <cite>glory</cite> folder and install <code class="docutils literal notranslate"><span class="pre">GLORY</span></code> from a command prompt or terminal :</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>.
 </pre></div>
 </div>
 <p>Try importing <code class="docutils literal notranslate"><span class="pre">GLORY</span></code> to confirm that installation was successful:</p>
@@ -156,7 +176,7 @@
 <span class="kn">import</span> <span class="nn">os</span>
 
 <span class="c1"># modify the path if downloaded to a different directory</span>
-<span class="n">config_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">glory</span><span class="o">.</span><span class="n">default_download_dir</span><span class="p">,</span> <span class="s1">&#39;example_config.yml&#39;</span><span class="p">)</span>
+<span class="n">config_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">glory</span><span class="o">.</span><span class="n">DEFAULT_DOWNLOAD_DIR</span><span class="p">,</span> <span class="s1">&#39;example_config.yml&#39;</span><span class="p">)</span>
 
 <span class="n">glory</span><span class="o">.</span><span class="n">run_model</span><span class="p">(</span><span class="n">config_file</span><span class="o">=</span><span class="n">config_file</span><span class="p">)</span>
 </pre></div>
