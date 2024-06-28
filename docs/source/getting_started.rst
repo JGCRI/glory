@@ -9,13 +9,24 @@ Installation
 Pre-requirements
 ^^^^^^^^^^^^^^^^
 
-- Before proceeding, ensure that Python is installed (version 3.9 or above). We recommend using Anaconda to set up a virtual environment.
+* Before proceeding, ensure that Python is installed (version 3.9 or above). We recommend using Anaconda to set up a virtual environment.
 
-- Additionally, you will need to install the linear programming solver ``glpk``. The recommended method is to use ``conda`` to avoid unexpected issues (refer to the `Pyomo documentation <https://jckantor.github.io/ND-Pyomo-Cookbook/notebooks/01.01-Installing-Pyomo.html#glpk>`_). Make sure to use the same Python environment for all packages.
+* Additionally, you will need to install the linear programming solver ``glpk``. The recommended method is to use ``conda`` to avoid unexpected issues (refer to the `Pyomo documentation <https://jckantor.github.io/ND-Pyomo-Cookbook/notebooks/01.01-Installing-Pyomo.html#glpk>`_). Make sure to use the same Python environment for all packages.
 
-.. code-block:: bash
+    * Use ``Conda``
 
-    conda install -c conda-forge glpk
+    .. code-block:: bash
+
+        conda install -c conda-forge glpk
+
+    * Use ``Homebrew``
+
+    .. code-block:: bash
+
+        brew install glpk
+
+        # set C linker and include flags so that the pip wheel build can find the headers and library
+        LDFLAGS="-L$(brew --prefix glpk)/lib" CFLAGS="-I$(brew --prefix glpk)/include" pip install glpk
 
 
 Install ``GLORY``
@@ -23,7 +34,15 @@ Install ``GLORY``
 
 **Option 1:**
 
-You can install ``GLORY`` from GitHub using ``pip`` in a command prompt or terminal:
+Install ``GLORY`` from a command prompt or terminal:
+
+.. code-block:: bash
+
+    pip install glory
+
+**Option 2:**
+
+You can install the development version of ``GLORY`` from GitHub using ``pip`` in a command prompt or terminal:
 
 .. code-block:: bash
 
@@ -31,7 +50,7 @@ You can install ``GLORY`` from GitHub using ``pip`` in a command prompt or termi
 
 This command will automatically install the dependencies. To avoid package version conflicts, consider using a virtual environment.
 
-**Option 2:**
+**Option 3:**
 
 Alternatively, users can clone the ``GLORY`` package from GitHub. Navigate to the desired directory:
 
@@ -43,7 +62,7 @@ Then, navigate into the cloned `glory` folder and install ``GLORY`` from a comma
 
 .. code-block:: bash
 
-    pip install
+    pip install .
 
 Try importing ``GLORY`` to confirm that installation was successful:
 
@@ -86,7 +105,7 @@ With the example data downloaded, a simple configuration can be run:
     import os
 
     # modify the path if downloaded to a different directory
-    config_file = os.path.join(glory.default_download_dir, 'example', 'example_config.yml')
+    config_file = os.path.join(glory.DEFAULT_DOWNLOAD_DIR, 'example_config.yml')
 
     glory.run_model(config_file=config_file)
 

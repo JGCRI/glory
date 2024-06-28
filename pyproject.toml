@@ -1,0 +1,54 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "glory"
+# version = "0.1.0"  # Ensure this matches the version in your __init__.py
+version = "0.1.0"
+description = "A python package for estimating global reservoir yield and costs for water supply."
+readme = "README.md"
+requires-python = ">=3.9"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Mengqi Zhao", email = "mengqi.zhao@pnnl.gov"}
+]
+maintainers = [
+  {name = "Mengqi Zhao", email = "mengqi.zhao@pnnl.gov"}
+]
+dependencies = [
+    "requests>=2.25.1",
+    "pandas>=1.5",
+    "numpy>=1.23,<2", # pyomo is not yet compatible with numpy 2
+    "PyYAML>=6.0",
+    "scipy>=1.11.2",
+    "pyomo>=6.6.2",
+    "matplotlib>=3.7.2",
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=6.0",
+]
+docs = [
+    "ipykernel>=6.15.1",
+    "autodoc>=0.5.0",
+    "nbsphinx~=0.8.6",
+    "sphinx~=7.2.6",
+    "sphinx-design~=0.5.0",
+    "sphinx-rtd-theme~=2.0.0",
+    "sphinx-mathjax-offline~=0.0.2"
+]
+deploy = [
+    "twine>=4.0.1",
+]
+
+[project.urls]
+Repository = "https://github.com/JGCRI/glory"
+Documentation = "https://jgcri.github.io/glory"

@@ -12,13 +12,15 @@ Copyright (c) 2023, Battelle Memorial Institute
 """
 
 import os
+from pathlib import Path
 import zipfile
 import requests
 import importlib.resources
 import importlib.metadata
 from io import BytesIO as BytesIO
 
-default_download_dir = os.path.join(os.path.dirname(str(importlib.resources.files('glory'))), 'example')
+
+DEFAULT_DOWNLOAD_DIR = Path(importlib.resources.files('glory')).parent / 'example'
 
 
 class InstallSupplement:
@@ -32,7 +34,7 @@ class InstallSupplement:
 
     # URL for DOI minted example data hosted on Zenodo
     DATA_VERSION_URLS = {
-        '1.0.0': 'https://zenodo.org/records/10471982/files/example.zip?download=1'
+        '0.1.0': 'https://zenodo.org/records/10471982/files/example.zip?download=1',
     }
 
     def __init__(self, example_data_directory):
@@ -88,7 +90,7 @@ def get_example_data(example_data_directory=None):
 
     # download to package folder by default
     if example_data_directory is None:
-        example_data_directory = default_download_dir  # GLORY package directory
+        example_data_directory = DEFAULT_DOWNLOAD_DIR  # GLORY package directory
 
     # if the 'example' folder already exists in the path, then skip the download
     if os.path.exists(example_data_directory) and os.listdir(example_data_directory):
@@ -101,3 +103,4 @@ def get_example_data(example_data_directory=None):
         zen = InstallSupplement(example_data_directory)
 
         zen.fetch_zenodo()
+
