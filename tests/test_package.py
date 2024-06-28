@@ -5,7 +5,7 @@ import os
 
 # download example data
 glory.get_example_data()
-downloaded_data_path = os.path.abspath(glory.default_download_dir)
+downloaded_data_path = os.path.abspath(glory.DEFAULT_DOWNLOAD_DIR)
 dir_output = os.path.join(downloaded_data_path, 'outputs')
 
 # config file
@@ -136,7 +136,9 @@ def test_diagnostics():
     """
     test diagnostics function
     """
-
+    glory.diagnostics(config=config,
+                      outputs=sc,
+                      fig_path=os.path.join(config.output_folder, 'diagnostics'))
     dir_diag_plot = os.path.abspath(os.path.join(dir_output, 'diagnostics', '2030', '83 - Guadalquivir.png'))
 
     assert os.path.exists(dir_diag_plot)
@@ -156,3 +158,17 @@ def test_warning():
 
     with pytest.raises(TypeError):
         glory.ConfigReader(os.path.join(downloaded_data_path, 'inputs', 'basin_to_country_mapping.csv'))
+
+
+def test_printout(capfd):
+    """
+    test printed out messages
+    """
+
+    glory.get_example_data(example_data_directory=downloaded_data_path)
+
+    out, err = capfd.readouterr()
+
+    assert f"The directory at {downloaded_data_path} is not empty, "\
+           f"so download has been skipped. "\
+           f"To download data again, please delete existing folder or save to an alternative directory." in out

@@ -60,6 +60,9 @@ def diagnostics(config, outputs, fig_path=None):
         # save figure
         if not os.path.exists(fig_path_period):
             os.makedirs(fig_path_period, exist_ok=True)
-        fig.savefig(os.path.join(fig_path_period, str(outputs.basin_id) + ' - ' + basin_name + '.png'))
+
+        file_path = os.path.join(fig_path_period, str(outputs.basin_id) + ' - ' + basin_name + '.png')
+        print(f'Saving diagnostic figure to: {file_path}')
+        fig.savefig(file_path)
 
         logging.info('Function diagnostics completed successfully.')
