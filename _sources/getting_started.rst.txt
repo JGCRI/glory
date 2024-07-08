@@ -38,7 +38,7 @@ Install ``GLORY`` from a command prompt or terminal:
 
 .. code-block:: bash
 
-    pip install glory
+    pip install glory-reservoir
 
 **Option 2:**
 
@@ -46,23 +46,9 @@ You can install the development version of ``GLORY`` from GitHub using ``pip`` i
 
 .. code-block:: bash
 
-    pip install git+https://github.com/JGCRI/glory
+    pip install git+https://github.com/JGCRI/glory@dev
 
 This command will automatically install the dependencies. To avoid package version conflicts, consider using a virtual environment.
-
-**Option 3:**
-
-Alternatively, users can clone the ``GLORY`` package from GitHub. Navigate to the desired directory:
-
-.. code-block:: bash
-
-    git clone https://github.com/JGCRI/glory
-
-Then, navigate into the cloned `glory` folder and install ``GLORY`` from a command prompt or terminal :
-
-.. code-block:: bash
-
-    pip install .
 
 Try importing ``GLORY`` to confirm that installation was successful:
 
