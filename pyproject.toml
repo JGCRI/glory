@@ -22,7 +22,10 @@ dependencies = [
     "scipy>=1.11.2",
     "pyomo>=6.6.2",
     "matplotlib>=3.7.2",
+    "PyYAML>=5.4.1",
+    "toml>=0.10.2"
 ]
+
 classifiers = [
   "Development Status :: 4 - Beta",
   "Programming Language :: Python :: 3.9",
