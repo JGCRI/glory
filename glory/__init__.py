@@ -13,6 +13,6 @@ from .utils.install_supplement import get_example_data, DEFAULT_DOWNLOAD_DIR
 from .model import execute, run_model
 
 
-__version__ = importlib.metadata.version(__package__ or __name__)
+__version__ = "0.1.0"
 
 default_download_dir = DEFAULT_DOWNLOAD_DIR

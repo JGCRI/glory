@@ -4,9 +4,9 @@ build-backend = "hatchling.build"
 
 [project]
 name = "glory-reservoir"
-version = "0.1.0"
 description = "A python package for estimating global reservoir yield and costs for water supply."
 readme = "README.md"
+version = "0.1.0"
 requires-python = ">=3.9"
 license = {file = "LICENSE"}
 authors = [
@@ -19,7 +19,6 @@ dependencies = [
     "requests>=2.25.1",
     "pandas>=1.5",
     "numpy>=1.23,<2", # pyomo is not yet compatible with numpy 2
-    "PyYAML>=6.0",
     "scipy>=1.11.2",
     "pyomo>=6.6.2",
     "matplotlib>=3.7.2",
@@ -52,14 +51,6 @@ deploy = [
 Repository = "https://github.com/JGCRI/glory"
 Documentation = "https://jgcri.github.io/glory"
 
-[tool.hatch.metadata]
-dynamic = ["name"]
-
-[tool.hatch.build.targets.sdist]
-include = ["src/glory"]
-
-[tool.hatch.build.targets.wheel]
-include = ["src/glory"]
-
-[tool.hatch.build.hooks.default]
-name = "glory"
+[tool.hatch.build]
+packages = ["glory"]  # set importable package name to "glory"
+include = ["glory"]
