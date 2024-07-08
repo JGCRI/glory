@@ -20,7 +20,7 @@ import importlib.metadata
 from io import BytesIO as BytesIO
 
 
-DEFAULT_DOWNLOAD_DIR = Path(importlib.resources.files('glory-reservoir')).parent / 'example'
+DEFAULT_DOWNLOAD_DIR = Path(importlib.resources.files('glory')).parent / 'example'
 
 
 class InstallSupplement:
