@@ -47,7 +47,7 @@ class InstallSupplement:
         current GLORY distribution."""
 
         # get the current version of GLORY that is installed
-        current_version = importlib.metadata.version('glory')
+        current_version = importlib.metadata.version('glory-reservoir')
 
         try:
             data_link = InstallSupplement.DATA_VERSION_URLS[current_version]
