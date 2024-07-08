@@ -2,6 +2,8 @@
 [![docs](https://github.com/JGCRI/glory/actions/workflows/docs.yml/badge.svg?branch=main)](https://github.com/JGCRI/glory/actions/workflows/docs.yml)
 [![tests](https://github.com/JGCRI/glory/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/JGCRI/glory/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/jgcri/glory/graph/badge.svg?token=TTH482Y1UD)](https://codecov.io/gh/jgcri/glory)
+[![DOI](https://zenodo.org/badge/707872858.svg)](https://zenodo.org/doi/10.5281/zenodo.12693017)
+
 
 # Introduction
 
