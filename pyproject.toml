@@ -3,8 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "glory"
-# version = "0.1.0"  # Ensure this matches the version in your __init__.py
+name = "glory-reservoir"
 version = "0.1.0"
 description = "A python package for estimating global reservoir yield and costs for water supply."
 readme = "README.md"
@@ -52,3 +51,18 @@ deploy = [
 [project.urls]
 Repository = "https://github.com/JGCRI/glory"
 Documentation = "https://jgcri.github.io/glory"
+
+[tool.hatch.metadata]
+dynamic = ["name"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/glory"]
+
+[tool.hatch.build.targets.wheel]
+include = ["src/glory"]
+
+[tool.hatch.build]
+hooks = ["hatchling.build.hooks:default"]
+
+[tool.hatch.build.hooks.default]
+name = "glory"
