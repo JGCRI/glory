@@ -61,8 +61,5 @@ include = ["src/glory"]
 [tool.hatch.build.targets.wheel]
 include = ["src/glory"]
 
-[tool.hatch.build]
-hooks = ["hatchling.build.hooks:default"]
-
 [tool.hatch.build.hooks.default]
 name = "glory"
